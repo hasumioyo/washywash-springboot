@@ -1,0 +1,83 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #8d8ced, #c1c0ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container login */
+form {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    width: 300px;
+}
+
+.titles {
+    text-align: center;
+    height: 100px;
+    width: auto;
+    display: grid;
+    grid-template-rows: 60px;
+}
+
+
+h2 {
+    /* position: absolute; */
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"], .drop-down {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #4facfe;
+    outline: none;
+    box-shadow: 0 0 5px rgba(79,172,254,0.5);
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #c1c0ff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover button */
+button:hover {
+    background-color: #8d8ced;
+}
+
+/* Pesan error */
+p {
+    top: 170px;
+    color: red;
+    font-weight: bold;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Form Barang</title>
+        <link rel="stylesheet" th:href="@{/css/form.css}">
+    </head>
+    <body>
+
+        <h2 th:text="${mode == 'tambah'} ? 'Tambah Barang' : 'Edit Barang'"></h2>
+
+        <form th:action="${mode == 'tambah'} ? @{/barang/simpan} : @{/barang/update}"
+            th:object="${barang}"
+            method="post">
+
+            <label>Kode Barang</label><br>
+            <input type="hidden" th:field="*{kodeBarang}">
+            <input type="text" th:value="*{kodeBarang}" readonly class="kode-barang-read"><br><br>
+            <!-- use * to make the code appear -->
+            <br>
+
+            <label>Nama Barang</label><br>
+            <input type="text" th:field="*{namaBarang}"><br><br>
+
+            <label>Kategori</label><br>
+            <input type="text" th:field="*{kategori}"><br><br>
+
+            <label>Harga</label><br>
+            <input type="number" min="0" th:field="*{harga}"><br><br>
+            
+
+            <label>Stok</label><br>
+            <input type="number" min="0" th:field="*{stok}"><br><br>
+
+            <div class="buttons">
+                <button type="submit" class="btn simpan-button">Simpan Barang</button>
+                <a href="/barang" class="btn batal-button">Batal</a>
+            </div>
+
+        </form>
+
+    </body>
+</html>

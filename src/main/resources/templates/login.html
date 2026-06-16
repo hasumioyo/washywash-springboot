@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login - WashyWash</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+
+    <body>
+        <form action="/login" method="post">
+            <div class="titles">
+                <h2>Login Elektronik Zeus</h2>
+                <p style="color: red;" th:if="${error}" th:text="${error}"></p><br>
+            </div>
+            <label>Username</label><br>
+            <input type="text" name="username"><br><br>
+    
+            <label>Password</label><br>
+            <input type="password" name="password"><br><br>
+    
+            <button type="submit">Login</button>
+        </form>
+        
+    </body>
+</html>

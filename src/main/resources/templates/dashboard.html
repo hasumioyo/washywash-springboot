@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+
+<section class="dashboard-1">
+    <div class="dash left-dashboard">
+        <h3>Elektronik Zeus</h3>
+        <h5>DASHBOARD</h5>
+        <ul>
+            
+            <li><i class="fa-solid fa-box"></i><a href="/barang" class="bttn">Manajemen Barang</a></li>
+            <li><i class="fa-solid fa-arrow-right-from-bracket"></i><a href="/logout" class="bttn">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="right-wrap">
+        <div class="dash titles-2">
+            <h2>Dashboard Toko Elektronik Zeus</h2>
+            <p>Selamat datang, <b th:text="${user.namaLengkap}"></b></p> 
+        </div>
+        <div class="dash right-dashboard">
+            <br>
+            <div class="info-limit-stock">
+                <i class="fa-solid fa-circle-info"></i>
+                <h5>Stok barang yang telah mencapai batas minimum</h5>    
+            </div>
+             <table border="1" cellpadding="8">
+                <tr>
+                    <th>Kode</th>
+                    <th>Nama Barang</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                </tr>
+                <tr th:each="barang : ${StokTerdikit}">
+                    <td th:text="${barang.kodeBarang}"></td>
+                    <td th:text="${barang.namaBarang}"></td>
+                    <td th:text="${barang.kategori}"></td>
+                    <td th:text="'Rp ' + ${#numbers.formatDecimal(barang.harga, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td th:text="${barang.stok}"></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+</body>
+</html>
