@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+    <head>
+        <title>List Pelanggan</title>
+        <link rel="stylesheet" th:href="@{/css/index.css}">
+    </head>
+
+    <body>
+        <h2>Pelanggan</h2>
+
+        <nav>
+            <div class="back">
+                <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+                <a href="/logout" class="a-logout">Logout</a>
+            </div>
+            <a href="/pelanggan/tambah" class="a-tambah">Tambah Pelanggan</a>
+        </nav>
+
+        <br><br>
+
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Kode Pelanggan</th>
+                <th>Nama</th>
+                <th>No Handphone</th>
+                <th>Email</th>
+                <th>Aksi</th>
+    
+            </tr>
+            <tr th:each="pelanggan : ${listPelanggan}">
+                <td th:text="${pelanggan.kodePelanggan}"></td>
+                <td th:text="${pelanggan.namaPelanggan}"></td>
+                <td th:text="${pelanggan.noHP}"></td>
+                <td th:text="${pelanggan.Email}"></td>
+                <td>
+                    <a th:href="@{/pelanggan/edit/{kode}(kode=${pelanggan.kodePelanggan})}" class="a-edit">Edit</a>
+                    |
+                    <a th:href="@{/barang/hapus/{kode}(kode=${pelanggan.kodePelanggan})}" class="a-hapus" onclick="return confirm('Yakin ingin menghapus barang ini?')">Hapus</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

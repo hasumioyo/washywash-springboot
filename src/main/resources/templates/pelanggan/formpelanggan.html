@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <title>Form Pelanggan</title>
+</head>
+<body>
+    <form th:action="${mode == 'tambah'} ? @{/pelanggan/simpan} : @{/pelanggan/update}" th:object="${pelanggan}"
+    method="post">
+            <!-- <label>Kode Barang</label><br> -->
+            <input type="hidden" th:field="*{kodePelanggan}">
+            <!-- <input type="text" th:value="*{kodePelanggan}" readonly class="kode-barang-read"><br><br> -->
+            <!-- use * to make the code appear -->
+            <br>
+
+            <label>Nama Pelanggan</label><br>
+            <input type="text" th:field="*{namaPelanggan}"><br><br>
+
+            <label>No Handphone</label><br>
+            <input type="text" th:field="*{noHP}"><br><br>
+
+            <label>Email</label><br>
+            <input type="text" th:field="*{Email}"><br><br>
+            
+
+            <div class="buttons">
+                <button type="submit" class="btn simpan-button">Simpan</button>
+                <a href="/pelanggan" class="btn batal-button">Batal</a>
+            </div>
+
+    </form>
+</body>
+</html>
