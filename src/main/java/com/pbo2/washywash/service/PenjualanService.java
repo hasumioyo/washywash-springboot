@@ -11,18 +11,20 @@ import com.pbo2.washywash.repository.PenjualanRepository;
 @Service
 public class PenjualanService {
     
+    private final PelangganService pelangganService;
     private final PenjualanRepository penjualanRepository;
     private final DetailPenjualanService detailPenjualanService;
 
-    public PenjualanService(PenjualanRepository penjualanRepository, DetailPenjualanService detailPenjualanService) {
+    public PenjualanService(PenjualanRepository penjualanRepository, DetailPenjualanService detailPenjualanService, PelangganService pelangganService) {
         this.penjualanRepository = penjualanRepository;
         this.detailPenjualanService = detailPenjualanService;
+        this.pelangganService = pelangganService;
     }
 
     public void tambahPenjualan(Penjualan penjualan) {
         double total = detailPenjualanService.hitungTotal(penjualan.getKodePenjualan());
 
-        penjualan.settotalPenjualan(total - penjualan.getDiskon());
+        penjualan.setTotalPenjualan(total - penjualan.getDiskonPenjualan());
 
         penjualanRepository.save(penjualan);
     }
@@ -33,5 +35,9 @@ public class PenjualanService {
 
     public void hapusPenjualan(String kodePenjualan) {
         penjualanRepository.deleteById(kodePenjualan);
+    }
+
+    public Penjualan getByKode(String kodePenjualan) {
+        return penjualanRepository.findById(kodePenjualan).orElseThrow(() -> new IllegalArgumentException("Penjualan tidak ditemukan"));
     }
 }

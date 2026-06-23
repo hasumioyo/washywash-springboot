@@ -7,12 +7,15 @@ import com.pbo2.washywash.repository.DetailPenjualanRepository;
 
 import java.util.List;
 
+
+
+@Service
 public class DetailPenjualanService {
     
     private final DetailPenjualanRepository detailpenjualanRepository;
 
-    public DetailPenjualanService(DetailPenjualanRepository detailPenjualanRepository) {
-        this.detailpenjualanRepository = detailPenjualanRepository;
+    public DetailPenjualanService(DetailPenjualanRepository detailpenjualanRepository) {
+        this.detailpenjualanRepository = detailpenjualanRepository;
     }
 
     public void tambahDetail(DetailPenjualan detail) {
@@ -33,7 +36,7 @@ public class DetailPenjualanService {
         double total = 0;
 
         for(DetailPenjualan d : details){
-            total += d.getsubTotal();
+            total += d.getSubTotal();
         }
         return total;
     }

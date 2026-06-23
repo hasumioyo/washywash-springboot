@@ -55,7 +55,7 @@ public class DetailPenjualan {
         this.harga = harga;
     }
 
-    public double getsubTotal() {
+    public double getSubTotal() {
         return subtotal;
     }
 

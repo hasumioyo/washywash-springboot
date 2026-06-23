@@ -1,7 +1,7 @@
 package com.pbo2.washywash.model;
 
 import jakarta.persistence.*;
-import java.sql.Date;
+// import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
@@ -22,6 +22,10 @@ public class Penjualan {
     @Column(name = "diskon")
     private double diskonPenjualan;
 
+    @ManyToOne
+    @JoinColumn(name = "kode_pelanggan")
+    private Pelanggan pelanggan;
+
     public String getKodePenjualan() {
         return kodePenjualan;
     }
@@ -38,21 +42,32 @@ public class Penjualan {
         this.tanggalPenjualan = tanggalPenjualan;
     }
 
-    public double gettotalPenjualan() {
+    public double getTotalPenjualan() {
         return totalPenjualan;
     }
 
-    public void settotalPenjualan(double totalPenjualan) {
-        this.totalPenjualan = totalPenjualan; 
+    public void setTotalPenjualan(double totalPenjualan) {
+        this.totalPenjualan = totalPenjualan;
     }
 
-    public double getDiskon() {
+    public double getDiskonPenjualan() {
         return diskonPenjualan;
     }
 
-    public void setDiskon(double diskonPenjualan){
+    public void setDiskonPenjualan(double diskonPenjualan){
         this.diskonPenjualan = diskonPenjualan;
     }
+
+    public Pelanggan getPelanggan() {
+        return pelanggan;
+    }
+
+    public void setPelanggan(Pelanggan pelanggan) {
+        this.pelanggan = pelanggan;
+    }
+
+
+
 
     
 }
