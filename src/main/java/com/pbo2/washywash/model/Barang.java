@@ -56,22 +56,21 @@ public class Barang {
     public void setNamaBarang(String namaBarang) {
         this.namaBarang = namaBarang;
     }
+    
+    public String getKategori() {
+        return kategori;
+    }
+    
+    public void setKategori(String kategori) {
+        this.kategori = kategori;
+    }
 
     public String getSatuan(){
         return satuan;
     }
 
-    public void getSatuan(String satuan) {
+    public void setSatuan(String satuan) {
         this.satuan = satuan;
-    }
-
-
-    public String getKategori() {
-        return kategori;
-    }
-
-    public void setKategori(String kategori) {
-        this.kategori = kategori;
     }
 
     public double getHarga() {

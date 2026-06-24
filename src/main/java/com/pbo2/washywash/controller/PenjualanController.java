@@ -178,40 +178,43 @@ public class PenjualanController {
 
         boolean addBarang = false;
 
-    for (DetailPenjualan detail : basketBarang) {
+        for (DetailPenjualan detail : basketBarang) {
 
-        if (detail.getBarang().getKodeBarang().equals(kodeBarang)) {
+            if (detail.getBarang().getKodeBarang().equals(kodeBarang)) {
 
-            detail.setQty(detail.getQty() + 1);
+                detail.setQty(detail.getQty() + 1);
+
+                detail.setSubTotal(detail.getQty() * detail.getHarga());
+                addBarang = true;
+                break;
+            }
+        }
+
+        if (!addBarang) {
+
+            DetailPenjualan detail = new DetailPenjualan();
+
+            detail.setBarang(barang);
+            detail.setQty(1);
+            detail.setHarga(barang.getHarga());
 
             detail.setSubTotal(detail.getQty() * detail.getHarga());
-            addBarang = true;
-            break;
+            basketBarang.add(detail);
         }
-    }
 
-    if (!addBarang) {
+        barang.setStok(barang.getStok() - 1);
+        barangService.updateBarang(barang);
 
-        DetailPenjualan detail = new DetailPenjualan();
+            // detail.setBarang(barang);
+            // detail.setQty(1);
+            // detail.setHarga(barang.getHarga());
+            // detail.setSubTotal(barang.getHarga());
 
-        detail.setBarang(barang);
-        detail.setQty(1);
-        detail.setHarga(barang.getHarga());
+            // basketBarang.add(detail);
 
-        detail.setSubTotal(detail.getQty() * detail.getHarga());
-        basketBarang.add(detail);
-    }
+            session.setAttribute("basketBarang", basketBarang);
 
-        // detail.setBarang(barang);
-        // detail.setQty(1);
-        // detail.setHarga(barang.getHarga());
-        // detail.setSubTotal(barang.getHarga());
-
-        // basketBarang.add(detail);
-
-        session.setAttribute("basketBarang", basketBarang);
-
-        return "redirect:/penjualan";
+            return "redirect:/penjualan";
     }
     
 
@@ -234,13 +237,20 @@ public class PenjualanController {
         model.addAttribute("error", "Uang pembayaran kurang");
 
         return "penjualan/form";
+    } else {
+
+        penjualan.setHasilKembalian(kembalian);
+        model.addAttribute("kembalian", kembalian);
     }
 
-    penjualan.setHasilKembalian(kembalian);
+    //btw ini biar kekirim semua data jak
+    model.addAttribute("details", basketBarang);
+    model.addAttribute("penjualan", penjualan);
+    model.addAttribute("listbarang", barangService.getAllBarang());
+    model.addAttribute("pelanggan", session.getAttribute("pelanggan"));
+    model.addAttribute("total", total);
 
-    model.addAttribute("kembalian", kembalian);
-
-    return "penjualan/struk";
+    return "penjualan/form";
 }
 
 }

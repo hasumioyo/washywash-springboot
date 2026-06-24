@@ -38,14 +38,15 @@
         <th>Kode</th>
         <th>Nama Barang</th>
         <th>Harga</th>
+        <th>Stok</th>
         <th>Aksi</th>
     </tr>
 
     <tr th:each="barang : ${listBarang}">
         <td th:text="${barang.kodeBarang}"></td>
-        <td th:text="${barang.namaBarang}"></td>
+        <td th:text="${barang.namaBarang}"></td> 
         <td th:text="'Rp ' + ${#numbers.formatDecimal(barang.harga, 0, 'COMMA', 2, 'POINT')}"></td>
-
+        <td th:text="${barang.stok}"></td>
         <td>
             <a th:href="@{/penjualan/tambahbarang/{kode}
                 (kode=${barang.kodeBarang})}">
@@ -56,11 +57,12 @@
 </table>
 
     <p>Total : <span th:text="'Rp ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}"></span></p>
-    <form th:action="@{/penjualan/cari}" method="get">
+
+    <form th:action="@{/penjualan/bayar}" method="post">
         <label>Pembayaran</label>
-        <input type="number" name="pembayaran" required>
+        <input type="number" name="totalPembayaran" required>
     
-        <p>Kembalian : <span th:text="${penjualan.hasilKembalian}"></span></p>
+        <p>Kembalian : <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.hasilKembalian, 0, 'COMMA', 2, 'POINT')}"></span></p>
         <button type="submit">Bayar</button>
     </form>
 </body>
