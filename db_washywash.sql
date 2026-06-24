@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `barang` (
   `kode_barang` varchar(255) NOT NULL,
   `nama_barang` varchar(255) DEFAULT NULL,
-  `kategori_barang` varchar(255) DEFAULT NULL,
+  `kategori` varchar(255) DEFAULT NULL,
   `harga_barang` double NOT NULL,
   `stok_barang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -39,7 +39,7 @@ CREATE TABLE `barang` (
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`kode_barang`, `nama_barang`, `kategori_barang`, `harga_barang`, `stok_barang`) VALUES
+INSERT INTO `barang` (`kode_barang`, `nama_barang`, `kategori`, `harga_barang`, `stok_barang`) VALUES
 ('BRG0001', 'Speaker Bluetooth', 'Audio', 10000, 10),
 ('BRG0002', 'JBL Go 4', 'Audio', 700000, 15),
 ('BRG0003', 'Sandisk Flashdisk 64GB', 'Storage Devices', 90000, 20),

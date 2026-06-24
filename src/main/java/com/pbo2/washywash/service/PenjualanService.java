@@ -24,7 +24,17 @@ public class PenjualanService {
     public void tambahPenjualan(Penjualan penjualan) {
         double total = detailPenjualanService.hitungTotal(penjualan.getKodePenjualan());
 
-        penjualan.setTotalPenjualan(total - penjualan.getDiskonPenjualan());
+        total -= penjualan.getDiskonPenjualan();
+
+        penjualan.setTotalPenjualan(total);
+
+        double kembalianp = penjualan.getTotalPembayaran() - total;
+
+        if (kembalianp < 0) {
+            throw new IllegalArgumentException("Uang pembayaran kurang");
+        }
+
+        penjualan.setHasilKembalian(kembalianp);
 
         penjualanRepository.save(penjualan);
     }
@@ -40,4 +50,6 @@ public class PenjualanService {
     public Penjualan getByKode(String kodePenjualan) {
         return penjualanRepository.findById(kodePenjualan).orElseThrow(() -> new IllegalArgumentException("Penjualan tidak ditemukan"));
     }
+
+    
 }

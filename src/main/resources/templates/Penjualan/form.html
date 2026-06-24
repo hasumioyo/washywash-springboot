@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Document</title>
+    <title>Penjualan</title>
 </head>
 <body>
     <!-- <p>Kode : <span th:text="${penjualan.kodePenjualan}"></span></p> -->
@@ -27,7 +27,7 @@
 
         <tr th:each="detail : ${details}">
             <td th:text="${detail.barang.namaBarang}"></td>
-            <td th:text="${detail.qty}"></td>
+            <td><a th:href="@{/penjualan/kurang/{kode} (kode=${detail.barang.kodeBarang})}">-</a><span th:text="${detail.qty}"></span><a th:href="@{/penjualan/tambahbarang/{kode} (kode=${detail.barang.kodeBarang})}">+</a></td>
             <td th:text="'Rp ' + ${#numbers.formatDecimal(detail.harga, 0, 'COMMA', 2, 'POINT')}"></td>
             <td th:text="'Rp ' + ${#numbers.formatDecimal(detail.subTotal, 0, 'COMMA', 2, 'POINT')}"></td>
         </tr>
@@ -55,6 +55,13 @@
     </tr>
 </table>
 
-    <p>subTotal : <span th:text="'Rp ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}"></span></p>
+    <p>Total : <span th:text="'Rp ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}"></span></p>
+    <form th:action="@{/penjualan/cari}" method="get">
+        <label>Pembayaran</label>
+        <input type="number" name="pembayaran" required>
+    
+        <p>Kembalian : <span th:text="${penjualan.hasilKembalian}"></span></p>
+        <button type="submit">Bayar</button>
+    </form>
 </body>
 </html>

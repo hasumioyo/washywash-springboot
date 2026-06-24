@@ -36,6 +36,7 @@
                     <th>Kode</th>
                     <th>Nama Barang</th>
                     <th>Kategori</th>
+                    <th>Satuan</th>
                     <th>Harga</th>
                     <th>Stok</th>
                 </tr>
@@ -43,6 +44,7 @@
                     <td th:text="${barang.kodeBarang}"></td>
                     <td th:text="${barang.namaBarang}"></td>
                     <td th:text="${barang.kategori}"></td>
+                    <td th:text="${barang.satuan}"></td>
                     <td th:text="'Rp ' + ${#numbers.formatDecimal(barang.harga, 0, 'COMMA', 2, 'POINT')}"></td>
                     <td th:text="${barang.stok}"></td>
                 </tr>

@@ -22,6 +22,12 @@ public class Penjualan {
     @Column(name = "diskon")
     private double diskonPenjualan;
 
+    @Column(name = "total_pembayaran")
+    private double totalPembayaran;
+
+    @Column(name = "hasil_kembalian")
+    private double hasilKembalian;
+
     @ManyToOne
     @JoinColumn(name = "kode_pelanggan")
     private Pelanggan pelanggan;
@@ -66,7 +72,21 @@ public class Penjualan {
         this.pelanggan = pelanggan;
     }
 
+    public double getTotalPembayaran() {
+        return totalPembayaran;
+    }
 
+    public void setTotalPembayaran(double totalPembayaran) {
+        this.totalPembayaran = totalPembayaran;
+    }
+
+    public double getHasilKembalian() {
+        return hasilKembalian;
+    }
+
+    public void setHasilKembalian(double hasilKembalian) {
+        this.hasilKembalian = hasilKembalian;
+    }
 
 
     

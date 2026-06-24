@@ -10,7 +10,7 @@ import jakarta.persistence.Column;
 public class DetailPenjualan {
     @Id
 
-    @Column(name = "id_detail")
+    @Column(name = "kode_detail")
     private String kodeDetail;
 
     @Column(name = "quantity")

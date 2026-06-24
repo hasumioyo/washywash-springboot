@@ -17,8 +17,11 @@ public class Barang {
     @Column(name = "nama_barang")
     private String namaBarang;
 
-    @Column(name = "kategori_barang")
+    @Column(name = "kategori")
     private String kategori;
+    
+    @Column(name = "satuan")
+    private String satuan;
 
     @Column(name = "harga_barang")
     private double harga;
@@ -29,13 +32,14 @@ public class Barang {
     public Barang() {
     }
 
-    public Barang(String kodeBarang, String namaBarang, String kategori, double harga, int stok) {
-        this.kodeBarang = kodeBarang;
-        this.namaBarang = namaBarang;
-        this.kategori = kategori;
-        this.harga = harga;
-        this.stok = stok;
-    }
+    // public Barang(String kodeBarang, String namaBarang, String kategori, double harga, int stok) {
+    //     this.kodeBarang = kodeBarang;
+    //     this.namaBarang = namaBarang;
+    //     this.kategori = kategori;
+    //     this.satuan = satuan;
+    //     this.harga = harga;
+    //     this.stok = stok;
+    // }
 
     public String getKodeBarang() {
         return kodeBarang;
@@ -52,6 +56,15 @@ public class Barang {
     public void setNamaBarang(String namaBarang) {
         this.namaBarang = namaBarang;
     }
+
+    public String getSatuan(){
+        return satuan;
+    }
+
+    public void getSatuan(String satuan) {
+        this.satuan = satuan;
+    }
+
 
     public String getKategori() {
         return kategori;

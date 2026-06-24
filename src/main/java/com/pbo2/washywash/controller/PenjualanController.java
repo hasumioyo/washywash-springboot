@@ -1,5 +1,6 @@
 package com.pbo2.washywash.controller;
 
+import com.pbo2.washywash.repository.PenjualanRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -29,16 +30,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/penjualan")
 public class PenjualanController {
+    private final PenjualanRepository penjualanRepository;
     private final PelangganService pelangganService;
     private final PenjualanService penjualanService;
     private final BarangService barangService;
     private final DetailPenjualanService detailPenjualanService;
 
-    public PenjualanController(PenjualanService penjualanService, DetailPenjualanService detailPenjualanService, PelangganService pelangganService, BarangService barangService) {
+    public PenjualanController(PenjualanService penjualanService, DetailPenjualanService detailPenjualanService, PelangganService pelangganService, BarangService barangService, PenjualanRepository penjualanRepository) {
         this.penjualanService = penjualanService;
         this.detailPenjualanService = detailPenjualanService;
         this.pelangganService = pelangganService;
         this.barangService = barangService;
+        this.penjualanRepository = penjualanRepository;
     }
 
     private boolean belumLogin(HttpSession session) {
@@ -75,12 +78,47 @@ public class PenjualanController {
         return "penjualan/form";
     }
 
-    @PostMapping("pathpenjualan")
-    public String simpan(@ModelAttribute Penjualan penjualan, HttpSession session, Model model) {
-        penjualanService.tambahPenjualan(penjualan);
-        
-        return "redirect:/penjualan";
+    @GetMapping("/kurang/{kodeBarang}")
+    public String kurangBarang(@PathVariable String kodeBarang, HttpSession session) {
+
+    List<DetailPenjualan> basketBarang =(List<DetailPenjualan>) session.getAttribute("basketBarang");
+
+    if (basketBarang != null) {
+
+        for (int i = 0; i < basketBarang.size(); i++) {
+
+            DetailPenjualan detail =
+                    basketBarang.get(i);
+
+            if (detail.getBarang()
+                    .getKodeBarang()
+                    .equals(kodeBarang)) {
+
+                if (detail.getQty() > 1) {
+
+                    detail.setQty(
+                            detail.getQty() - 1);
+
+                    detail.setSubTotal(
+                            detail.getQty()
+                            * detail.getHarga());
+
+                } else {
+
+                    basketBarang.remove(i);
+                }
+
+                break;
+            }
+        }
     }
+
+    session.setAttribute(
+            "basketBarang",
+            basketBarang);
+
+    return "redirect:/penjualan";
+}
 
     @GetMapping("/hapus/{kodePenjualan}")
     public String hapus(@PathVariable String kodePenjualan) {
@@ -176,8 +214,33 @@ public class PenjualanController {
         return "redirect:/penjualan";
     }
     
-    
 
+    @PostMapping("/bayar")
+    public String bayar(@ModelAttribute Penjualan penjualan, HttpSession session, Model model) {
 
+    List<DetailPenjualan> basketBarang = (List<DetailPenjualan>) session.getAttribute("basketBarang");
+
+    double total = 0;
+
+    for (DetailPenjualan d : basketBarang) {
+        total += d.getSubTotal();
+    }
+
+    penjualan.setTotalPenjualan(total);
+
+    double kembalian = penjualan.getTotalPembayaran()- total;
+
+    if(kembalian < 0){
+        model.addAttribute("error", "Uang pembayaran kurang");
+
+        return "penjualan/form";
+    }
+
+    penjualan.setHasilKembalian(kembalian);
+
+    model.addAttribute("kembalian", kembalian);
+
+    return "penjualan/struk";
+}
 
 }
