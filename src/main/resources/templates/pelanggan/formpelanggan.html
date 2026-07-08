@@ -2,8 +2,11 @@
 <html xmlns="http://www.thymeleaf.org">
 <head>
     <title>Form Pelanggan</title>
+    <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
+
 <body>
+    <h2 th:text="${mode == 'tambah'} ? 'Tambah Pelanggan' : 'Edit Pelanggan'"></h2>
     <form th:action="${mode == 'tambah'} ? @{/pelanggan/simpan} : @{/pelanggan/update}" th:object="${pelanggan}"
     method="post">
             <!-- <label>Kode Barang</label><br> -->
@@ -11,7 +14,7 @@
             <!-- <input type="text" th:value="*{kodePelanggan}" readonly class="kode-barang-read"><br><br> -->
             <!-- use * to make the code appear -->
             <br>
-
+    
             <label>Nama Pelanggan</label><br>
             <input type="text" th:field="*{namaPelanggan}"><br><br>
 

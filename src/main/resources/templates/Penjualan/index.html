@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+<head >
+    <title>Riwayat</title>
+</head>
+
+<body>
+    <h2>Riwayat WashyWash</h2>
+
+    <table border="1" cellpadding="8">
+            <tr>
+                <th>Kode Penjualan</th>
+                <th>Tanggal Penjualan</th>
+                <th>Kode Pelanggan</th>
+                <th>Total</th>
+                <th>Diskon</th>
+                <th>Total Pembayaran</th>
+                <th>Kembalian</th>
+                <th>Aksi</th>
+            </tr>
+            <tr th:each="penjualan : ${listPenjualan}">
+                <td th:text="${penjualan.kodePenjualan}"></td>
+                <td th:text="${penjualan.tanggalPenjualan}"></td>
+                <td th:text="${penjualan.pelanggan != null ? penjualan.pelanggan.kodePelanggan : '-'}"></td>
+                <td th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPenjualan, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${penjualan.diskonPenjualan}"></td>
+                <td th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPembayaran, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.hasilKembalian, 0, 'COMMA', 2, 'POINT')}"></td>
+
+                <!-- <td th:text="${barang.stok}"></td>
+                <td>
+                    <a th:href="@{/barang/edit/{kode}(kode=${barang.kodeBarang})}" class="a-edit">Edit</a>
+                    |
+                    <a th:href="@{/barang/hapus/{kode}(kode=${barang.kodeBarang})}" class="a-hapus" onclick="return confirm('Yakin ingin menghapus barang ini?')">Hapus</a>
+                </td> -->
+            </tr>
+        </table>
+</body>
+</html>

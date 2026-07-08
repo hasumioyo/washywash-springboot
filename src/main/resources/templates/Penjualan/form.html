@@ -2,68 +2,84 @@
 <html>
 <head>
     <title>Penjualan</title>
+    <link rel="stylesheet" th:href="@{/css/penjualan/form.css}">
 </head>
 <body>
-    <!-- <p>Kode : <span th:text="${penjualan.kodePenjualan}"></span></p> -->
-    <p>Tanggal : <span th:text="${penjualan.tanggalPenjualan}"></span></p>
+    <div class="split-container">
+        <section class="split-left">
+             <!-- <p>Kode : <span th:text="${penjualan.kodePenjualan}"></span></p> -->
+            <p>Tanggal : <span th:text="${penjualan.tanggalPenjualan}"></span></p>
 
-    <form th:action="@{/penjualan/cari}" method="get">
-        <input type="text" name="kodePelanggan" placeholder="Kode Pelanggan">
-        <button type="submit">Cari</button>
-    </form>
+            <form th:action="@{/penjualan/cari}" method="get">
+                <input type="text" name="kodePelanggan" placeholder="Kode Pelanggan">
+                <button type="submit">Cari</button>
+            </form>
+            
+            <div th:if="${error}" style="color:red; font-weight:bold; margin:10px 0;">
+                <span th:text="${error}"></span>
+            </div>
 
-    <div th:if="${pelanggan != null}">
-        <p>Kode Pelanggan   : <span th:text="${pelanggan.kodePelanggan}"></span></p>
-        <p>Nama Pelanggan   : <span th:text="${pelanggan.namaPelanggan}"></span></p>
+
+            <div th:if="${pelanggan != null}">
+                <p>Kode Pelanggan   : <span th:text="${pelanggan.kodePelanggan}"></span></p>
+                <p>Nama Pelanggan   : <span th:text="${pelanggan.namaPelanggan}"></span></p>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Barang</th>
+                    <th>Qty</th>
+                    <th>Harga</th>
+                    <th>Subtotal</th>
+                </tr>
+
+                <tr th:each="detail : ${details}">
+                    <td th:text="${detail.barang.namaBarang}"></td>
+                    <td><a th:href="@{/penjualan/kurang/{kode} (kode=${detail.barang.kodeBarang})}">-</a><span th:text="${detail.qty}"></span><a th:href="@{/penjualan/tambahbarang/{kode} (kode=${detail.barang.kodeBarang})}">+</a></td>
+                    <td th:text="'Rp ' + ${#numbers.formatDecimal(detail.harga, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td th:text="'Rp ' + ${#numbers.formatDecimal(detail.subTotal, 0, 'COMMA', 2, 'POINT')}"></td>
+                </tr>
+            </table>
+            
+            <div class="total-pembayaran"><p>Total : <span th:text="'Rp ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}"></span></p></div>
+            
+            <form th:action="@{/penjualan/bayar}" method="post">
+                <label>Pembayaran</label>
+                <input type="number" name="totalPembayaran" required>
+            
+                <p>Kembalian : <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.hasilKembalian, 0, 'COMMA', 2, 'POINT')}"></span></p>
+                <button type="submit">Bayar</button>
+            </form>
+             <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+        </section>
+
+        <section class="split-right">
+            <table border="1">
+                <tr>
+                    <th>Kode</th>
+                    <th>Nama Barang</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Aksi</th>
+                </tr>
+
+                <tr th:each="barang : ${listBarang}">
+                    <td th:text="${barang.kodeBarang}"></td>
+                    <td th:text="${barang.namaBarang}"></td> 
+                    <td th:text="'Rp ' + ${#numbers.formatDecimal(barang.harga, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td th:text="${barang.stok}"></td>
+                    <td>
+                        <a th:href="@{/penjualan/tambahbarang/{kode}
+                            (kode=${barang.kodeBarang})}">
+                            Tambah
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            
+        </section>
     </div>
-
-    <table>
-        <tr>
-            <th>Barang</th>
-            <th>Qty</th>
-            <th>Harga</th>
-            <th>Subtotal</th>
-        </tr>
-
-        <tr th:each="detail : ${details}">
-            <td th:text="${detail.barang.namaBarang}"></td>
-            <td><a th:href="@{/penjualan/kurang/{kode} (kode=${detail.barang.kodeBarang})}">-</a><span th:text="${detail.qty}"></span><a th:href="@{/penjualan/tambahbarang/{kode} (kode=${detail.barang.kodeBarang})}">+</a></td>
-            <td th:text="'Rp ' + ${#numbers.formatDecimal(detail.harga, 0, 'COMMA', 2, 'POINT')}"></td>
-            <td th:text="'Rp ' + ${#numbers.formatDecimal(detail.subTotal, 0, 'COMMA', 2, 'POINT')}"></td>
-        </tr>
-    </table>
-
-    <table border="1">
-    <tr>
-        <th>Kode</th>
-        <th>Nama Barang</th>
-        <th>Harga</th>
-        <th>Stok</th>
-        <th>Aksi</th>
-    </tr>
-
-    <tr th:each="barang : ${listBarang}">
-        <td th:text="${barang.kodeBarang}"></td>
-        <td th:text="${barang.namaBarang}"></td> 
-        <td th:text="'Rp ' + ${#numbers.formatDecimal(barang.harga, 0, 'COMMA', 2, 'POINT')}"></td>
-        <td th:text="${barang.stok}"></td>
-        <td>
-            <a th:href="@{/penjualan/tambahbarang/{kode}
-                (kode=${barang.kodeBarang})}">
-                Tambah
-            </a>
-        </td>
-    </tr>
-</table>
-
-    <p>Total : <span th:text="'Rp ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}"></span></p>
-
-    <form th:action="@{/penjualan/bayar}" method="post">
-        <label>Pembayaran</label>
-        <input type="number" name="totalPembayaran" required>
+   
     
-        <p>Kembalian : <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.hasilKembalian, 0, 'COMMA', 2, 'POINT')}"></span></p>
-        <button type="submit">Bayar</button>
-    </form>
 </body>
 </html>

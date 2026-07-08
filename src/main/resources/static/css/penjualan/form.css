@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    /* align-items: center; */
+    height: 100vh;
+    margin: 0;
+    width: 100%;
+    /* height: 1420px; */
+    overflow-x: hidden;
+}
+
+.split-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.split-left,
+.split-right {
+    flex: 1;
+    overflow: hidden;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    margin: 5px;
+    border-left: 1px solid black;
+}
+
+input[type=text], input[type=number]{
+    width: 30%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+table {
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 12px;
+    /* box-shadow: 0 4px 12px rgba(0,0,0,0.2); */
+    width: 90%;
+    border-collapse: collapse;
+
+    
+}
+
+th {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    /* border-top: none; */
+    padding: 15px;
+    background-color: rgb(215, 215, 215);
+}
+
+
+td {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    border-top: none;
+    padding: 15px;
+}
+
+.total-pembayaran {
+    width: 100%;
+    text-align: end;
+}

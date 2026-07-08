@@ -4,6 +4,9 @@ import com.pbo2.washywash.repository.PenjualanRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,7 @@ import com.pbo2.washywash.service.PelangganService;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -82,6 +86,7 @@ public class PenjualanController {
     public String kurangBarang(@PathVariable String kodeBarang, HttpSession session) {
 
     List<DetailPenjualan> basketBarang =(List<DetailPenjualan>) session.getAttribute("basketBarang");
+
 
     if (basketBarang != null) {
 
@@ -164,7 +169,7 @@ public class PenjualanController {
     }
 
     @GetMapping("/tambahbarang/{kodeBarang}")
-    public String tambahBarang(@PathVariable String kodeBarang, HttpSession session) {
+    public String tambahBarang(@PathVariable String kodeBarang, HttpSession session,  RedirectAttributes redirectAttributes) {
 
         Barang barang = barangService.getBarangByKode(kodeBarang);
 
@@ -174,6 +179,10 @@ public class PenjualanController {
             basketBarang = new ArrayList<>();
         }
         
+        if (barang.getStok() <= 0) {
+            redirectAttributes.addFlashAttribute("error", "Stok barang habis.");
+            return "redirect:/penjualan";
+        }
         // DetailPenjualan detail = new DetailPenjualan();
 
         boolean addBarang = false;
@@ -202,8 +211,8 @@ public class PenjualanController {
             basketBarang.add(detail);
         }
 
-        barang.setStok(barang.getStok() - 1);
-        barangService.updateBarang(barang);
+        // barang.setStok(barang.getStok() - 1);
+        // barangService.updateBarang(barang);
 
             // detail.setBarang(barang);
             // detail.setQty(1);
@@ -219,38 +228,94 @@ public class PenjualanController {
     
 
     @PostMapping("/bayar")
-    public String bayar(@ModelAttribute Penjualan penjualan, HttpSession session, Model model) {
+        public String bayar(@ModelAttribute Penjualan penjualan, HttpSession session, Model model) {
 
-    List<DetailPenjualan> basketBarang = (List<DetailPenjualan>) session.getAttribute("basketBarang");
+        List<DetailPenjualan> basketBarang = (List<DetailPenjualan>) session.getAttribute("basketBarang");
 
-    double total = 0;
+        double total = 0;
 
-    for (DetailPenjualan d : basketBarang) {
-        total += d.getSubTotal();
-    }
+        for (DetailPenjualan d : basketBarang) {
+            total += d.getSubTotal();
+        }
 
-    penjualan.setTotalPenjualan(total);
+        penjualan.setTotalPenjualan(total);
 
-    double kembalian = penjualan.getTotalPembayaran()- total;
+        double kembalian = penjualan.getTotalPembayaran()- total;
 
-    if(kembalian < 0){
-        model.addAttribute("error", "Uang pembayaran kurang");
+        if(kembalian < 0){
+            model.addAttribute("error", "Uang pembayaran kurang");
+
+            return "penjualan/form";
+        } else {
+
+            penjualan.setHasilKembalian(kembalian);
+
+            // Membuat kode penjualan otomatis
+            DateTimeFormatter formatter =
+                    DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+            penjualan.setKodePenjualan(
+                    "PJ" + LocalDateTime.now().format(formatter));
+
+            // Menyimpan tanggal transaksi
+            penjualan.setTanggalPenjualan(LocalDate.now());
+
+            // Mengambil pelanggan dari session
+            penjualan.setPelanggan((Pelanggan) session.getAttribute("pelanggan"));
+
+            // Simpan penjualan
+            penjualanService.tambahPenjualan(penjualan);
+
+            // Simpan detail penjualan
+            for (DetailPenjualan detail : basketBarang) {
+                detail.setPenjualan(penjualan);
+                detailPenjualanService.tambahDetail(detail);
+            }
+
+
+            //kurangkan stok
+            for(DetailPenjualan detail : basketBarang) {
+                Barang barang = detail.getBarang();
+                barang.setStok(barang.getStok()- detail.getQty());
+
+                barangService.updateBarang(barang);
+            }
+
+            session.removeAttribute("basketBarang");
+            session.removeAttribute("pelanggan");
+
+            model.addAttribute("kembalian", kembalian);
+        }
+
+        //btw ini biar kekirim semua data jak
+        model.addAttribute("details", basketBarang);
+        model.addAttribute("penjualan", penjualan);
+        model.addAttribute("listBarang", barangService.getAllBarang());
+        model.addAttribute("pelanggan", session.getAttribute("pelanggan"));
+        model.addAttribute("total", total);
 
         return "penjualan/form";
-    } else {
-
-        penjualan.setHasilKembalian(kembalian);
-        model.addAttribute("kembalian", kembalian);
     }
 
-    //btw ini biar kekirim semua data jak
-    model.addAttribute("details", basketBarang);
-    model.addAttribute("penjualan", penjualan);
-    model.addAttribute("listbarang", barangService.getAllBarang());
-    model.addAttribute("pelanggan", session.getAttribute("pelanggan"));
-    model.addAttribute("total", total);
+    @GetMapping("/selesai")
+    public String selesai(HttpSession session){
 
-    return "penjualan/form";
-}
+        session.removeAttribute("basketBarang");
+        session.removeAttribute("pelanggan");
+
+        return "redirect:/penjualan";
+    }
+
+    @GetMapping("/listpenjualan")
+    public String listPenjualan(HttpSession session, Model model) {
+        if (belumLogin(session)) {
+            return "redirect:/";
+        }
+        
+        model.addAttribute("listPenjualan", penjualanService.getAllPenjualan());
+
+        return "penjualan/index";
+    }
+    
 
 }

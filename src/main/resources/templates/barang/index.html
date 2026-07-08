@@ -3,6 +3,8 @@
     <head>
         <title>Manajemen Barang</title>
         <link rel="stylesheet" th:href="@{/css/index.css}">
+        <link rel="stylesheet" href="css/pico.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     </head>
 
     <body>
@@ -14,6 +16,10 @@
                 <a href="/logout" class="a-logout">Logout</a>
             </div>
             <a href="/barang/tambah" class="a-tambah">Tambah Barang</a>
+            <form action="">
+                <input type="text" placeholder="Cari barang..">
+                <button type="submit">Cari</button>
+            </form>
         </nav>
 
 

@@ -2,16 +2,14 @@ package com.pbo2.washywash.model;
 
 import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-
 @Entity
 @Table(name = "detailpenjualan")
 
 public class DetailPenjualan {
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "kode_detail")
-    private String kodeDetail;
+    private Long kodeDetail;
 
     @Column(name = "quantity")
     private int qty;
@@ -31,11 +29,11 @@ public class DetailPenjualan {
     private Barang barang;
 
 
-    public String getKodeDetail() {
+    public Long getKodeDetail() {
         return kodeDetail;
     }
 
-    public void setKodeDetail(String kodeDetail) {
+    public void setKodeDetail(Long kodeDetail) {
         this.kodeDetail = kodeDetail;
     }
 

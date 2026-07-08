@@ -3,6 +3,7 @@
     <head>
         <title>Form Barang</title>
         <link rel="stylesheet" th:href="@{/css/form.css}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     </head>
     <body>
 
@@ -22,10 +23,30 @@
             <input type="text" th:field="*{namaBarang}"><br><br>
 
             <label>Kategori</label><br>
-            <input type="text" th:field="*{kategori}"><br><br>
+            <!-- <input type="text" th:field="*{kategori}"><br><br> -->
+            <div class="select-container">
+                <select th:field="*{kategori}" required>
+                    <option value="" selected disabled>Select</option>
+                    <option value="Pewangi">Pewangi</option>
+                    <option value="Bahan Cuci">Bahan Cuci</option>
+                    <option value="Kemasan">Kemasan</option>
+                </select>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <br>
 
             <label>Satuan</label><br>
-            <input type="text" th:field="*{satuan}"><br><br>
+            <!-- <input type="text" th:field="*{satuan}"><br><br> -->
+             <div class="select-container">
+                <select th:field="*{satuan}" required>
+                    <option value="" selected disabled>Select</option>
+                    <option value="Pewangi">Liter</option>
+                    <option value="Bahan Cuci">Botol</option>
+                    <option value="Kemasan">Pack</option>
+                </select>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <br>
 
             <label>Harga</label><br>
             <input type="number" min="0" th:field="*{harga}"><br><br>

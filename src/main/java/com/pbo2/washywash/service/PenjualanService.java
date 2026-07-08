@@ -22,21 +22,17 @@ public class PenjualanService {
     }
 
     public void tambahPenjualan(Penjualan penjualan) {
-        double total = detailPenjualanService.hitungTotal(penjualan.getKodePenjualan());
 
-        total -= penjualan.getDiskonPenjualan();
+    double kembalian = penjualan.getTotalPembayaran()
+            - penjualan.getTotalPenjualan();
 
-        penjualan.setTotalPenjualan(total);
+    if (kembalian < 0) {
+        throw new IllegalArgumentException("Uang pembayaran kurang");
+    }
 
-        double kembalianp = penjualan.getTotalPembayaran() - total;
+    penjualan.setHasilKembalian(kembalian);
 
-        if (kembalianp < 0) {
-            throw new IllegalArgumentException("Uang pembayaran kurang");
-        }
-
-        penjualan.setHasilKembalian(kembalianp);
-
-        penjualanRepository.save(penjualan);
+    penjualanRepository.save(penjualan);
     }
 
     public List<Penjualan> getAllPenjualan() {

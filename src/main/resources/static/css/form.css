@@ -74,3 +74,30 @@ input[type=text], input[type=number]{
 .batal-button:hover{
     background-color: rgb(249, 44, 44);
 }
+
+.select-container{
+    position: relative;
+    width: 100%;
+}
+
+.select-container select{
+    width:100%;
+    padding:10px 40px 10px 10px; /* beri ruang untuk icon */
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+}
+
+.select-container i{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size: 10px;
+    color: grey;
+    pointer-events:none;
+}
