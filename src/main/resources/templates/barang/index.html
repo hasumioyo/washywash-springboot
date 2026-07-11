@@ -16,8 +16,9 @@
                 <a href="/logout" class="a-logout">Logout</a>
             </div>
             <a href="/barang/tambah" class="a-tambah">Tambah Barang</a>
-            <form action="">
-                <input type="text" placeholder="Cari barang..">
+
+            <form th:action="@{/barang/cari}" method="get">
+                <input type="text" name="keyword" placeholder="Cari barang..">
                 <button type="submit">Cari</button>
             </form>
         </nav>

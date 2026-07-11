@@ -2,7 +2,8 @@ package com.pbo2.washywash.model;
 
 import jakarta.persistence.*;
 // import java.sql.Date;
-import java.time.LocalDate;
+// import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "penjualan")
@@ -14,7 +15,7 @@ public class Penjualan {
     private String kodePenjualan;
 
     @Column(name = "tanggal_penjualan")
-    private LocalDate tanggalPenjualan;
+    private LocalDateTime tanggalPenjualan;
 
     @Column(name = "total")
     private double totalPenjualan;
@@ -40,11 +41,11 @@ public class Penjualan {
         this.kodePenjualan = kodePenjualan;
     }
 
-    public LocalDate getTanggalPenjualan() {
+    public LocalDateTime getTanggalPenjualan() {
         return tanggalPenjualan;
     }
 
-    public void setTanggalPenjualan(LocalDate tanggalPenjualan) {
+    public void setTanggalPenjualan(LocalDateTime tanggalPenjualan) {
         this.tanggalPenjualan = tanggalPenjualan;
     }
 

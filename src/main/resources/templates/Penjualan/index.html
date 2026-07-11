@@ -27,13 +27,26 @@
                 <td th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPembayaran, 0, 'COMMA', 2, 'POINT')}"></td>
                 <td th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.hasilKembalian, 0, 'COMMA', 2, 'POINT')}"></td>
 
-                <!-- <td th:text="${barang.stok}"></td>
                 <td>
-                    <a th:href="@{/barang/edit/{kode}(kode=${barang.kodeBarang})}" class="a-edit">Edit</a>
+                    <a th:href="@{/penjualan/detail/{kode}(kode=${penjualan.kodePenjualan})}">
+                        Detail
+                    </a>
+
                     |
-                    <a th:href="@{/barang/hapus/{kode}(kode=${barang.kodeBarang})}" class="a-hapus" onclick="return confirm('Yakin ingin menghapus barang ini?')">Hapus</a>
-                </td> -->
+
+                    <a th:href="@{/penjualan/strukpembayaran/{kode}(kode=${penjualan.kodePenjualan})}">
+                        Cetak
+                    </a>
+
+                    |
+
+                    <a th:href="@{/penjualan/hapus/{kode}(kode=${penjualan.kodePenjualan})}"
+                    onclick="return confirm('Yakin ingin menghapus transaksi ini?')">
+                        Hapus
+                    </a>
+                </td>
             </tr>
         </table>
+        <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
 </body>
 </html>

@@ -20,6 +20,8 @@ public interface BarangRepository extends JpaRepository<Barang, String> {
     @Query(value = "SELECT * FROM barang WHERE stok_barang <= 10 ORDER BY stok_barang ASC LIMIT 5",
        nativeQuery = true)
     List<Barang> find10stokterendah();
+ 
+    List<Barang> findByKodeBarangContainingIgnoreCaseOrNamaBarangContainingIgnoreCase(String kodeBarang, String namaBarang);
 }
 // @Repository
 // public class BarangRepository {

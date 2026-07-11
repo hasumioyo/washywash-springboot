@@ -13,17 +13,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.pbo2.washywash.model.DetailPenjualan;
 import com.pbo2.washywash.model.Penjualan;
 import com.pbo2.washywash.service.DetailPenjualanService;
+import com.pbo2.washywash.service.PenjualanService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
 
 
 @Controller
 @RequestMapping("/detailpenjualan")
 public class DetailPenjualanController {
     private final DetailPenjualanService detailPenjualanService;
+    private final PenjualanService penjualanService;
 
-    public DetailPenjualanController(DetailPenjualanService detailPenjualanService) {
+    public DetailPenjualanController(DetailPenjualanService detailPenjualanService,PenjualanService penjualanService ) {
         this.detailPenjualanService = detailPenjualanService;
+        this.penjualanService = penjualanService;
     }
 
     private boolean belumLogin(HttpSession session) {
@@ -43,6 +47,7 @@ public class DetailPenjualanController {
         return "detailpenjualan/index";
     }
 
+    
     
 
 }

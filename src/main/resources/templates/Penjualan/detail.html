@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detail Penjualan</title>
+</head>
+<body>
+
+<h2>Detail Penjualan</h2>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <td><b>Kode Penjualan</b></td>
+        <td th:text="${penjualan.kodePenjualan}"></td>
+    </tr>
+
+    <tr>
+        <td><b>Tanggal</b></td>
+        <td th:text="${#temporals.format(penjualan.tanggalPenjualan,'dd-MM-yyyy HH:mm:ss')}"></td>
+    </tr>
+
+    <tr>
+        <td><b>Kode Pelanggan</b></td>
+        <td th:text="${penjualan.pelanggan != null ? penjualan.pelanggan.kodePelanggan : '-'}"></td>
+    </tr>
+
+    <tr>
+        <td><b>Nama Pelanggan</b></td>
+        <td th:text="${penjualan.pelanggan != null ? penjualan.pelanggan.namaPelanggan : '-'}"></td>
+    </tr>
+</table>
+
+<br>
+
+<h3>Daftar Barang</h3>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>No</th>
+        <th>Kode Barang</th>
+        <th>Nama Barang</th>
+        <th>Harga</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+    </tr>
+
+    <tr th:each="detail, stat : ${details}">
+        <td th:text="${stat.count}"></td>
+
+        <td th:text="${detail.barang.kodeBarang}"></td>
+
+        <td th:text="${detail.barang.namaBarang}"></td>
+
+        <td th:text="'Rp ' + ${#numbers.formatDecimal(detail.harga,0,'COMMA',2,'POINT')}"></td>
+
+        <td th:text="${detail.qty}"></td>
+
+        <td th:text="'Rp ' + ${#numbers.formatDecimal(detail.subTotal,0,'COMMA',2,'POINT')}"></td>
+    </tr>
+</table>
+
+<br>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <td><b>Total</b></td>
+        <td th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPenjualan,0,'COMMA',2,'POINT')}"></td>
+    </tr>
+
+    <tr>
+        <td><b>Total Pembayaran</b></td>
+        <td th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPembayaran,0,'COMMA',2,'POINT')}"></td>
+    </tr>
+
+    <tr>
+        <td><b>Kembalian</b></td>
+        <td th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.hasilKembalian,0,'COMMA',2,'POINT')}"></td>
+    </tr>
+</table>
+
+<br>
+
+<a th:href="@{/penjualan/listpenjualan}">
+    <button>Kembali</button>
+</a>
+
+<a th:href="@{/penjualan/strukpembayaran/{kode}(kode=${penjualan.kodePenjualan})}">
+    <button>Cetak Struk</button>
+</a>
+
+</body>
+</html>

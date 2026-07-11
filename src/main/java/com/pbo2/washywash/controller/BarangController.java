@@ -86,6 +86,21 @@ public class BarangController {
         return "redirect:/barang";
     }
 
+    @GetMapping("/cari")
+    public String cariBarang(@RequestParam String keyword, Model model, HttpSession session) {
+        
+        if(belumLogin(session)) {
+            return "redirect:/";
+        }
+        
+        model.addAttribute("listBarang", barangService.cariBarang(keyword));
+
+        return "barang/index";
+    }
+
+
+    
+
     
     
 }

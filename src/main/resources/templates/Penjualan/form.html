@@ -51,6 +51,10 @@
                 <button type="submit">Bayar</button>
             </form>
              <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+             <a th:href="@{/penjualan/strukpembayaran/{kode}
+            (kode=${penjualan.kodePenjualan})}">
+                Cetak Struk
+            </a>
         </section>
 
         <section class="split-right">

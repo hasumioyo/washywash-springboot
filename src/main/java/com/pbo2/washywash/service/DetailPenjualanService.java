@@ -30,16 +30,16 @@ public class DetailPenjualanService {
         return detailpenjualanRepository.findByPenjualan_KodePenjualan(kodePenjualan);
     }
 
-    public double hitungTotal(String kodePenjualan) {
-        List<DetailPenjualan> details = getByKodePenjualan(kodePenjualan);
+    // public double hitungTotal(String kodePenjualan) {
+    //     List<DetailPenjualan> details = getByKodePenjualan(kodePenjualan);
 
-        double total = 0;
+    //     double total = 0;
 
-        for(DetailPenjualan d : details){
-            total += d.getSubTotal();
-        }
-        return total;
-    }
+    //     for(DetailPenjualan d : details){
+    //         total += d.getSubTotal();
+    //     }
+    //     return total;
+    // }
 
     private void validateDetail(DetailPenjualan detail) {
         if (detail.getPenjualan() == null) {

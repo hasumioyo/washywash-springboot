@@ -56,4 +56,11 @@ public class BarangService {
     public List<Barang> getStokBarang10Terendah() {
         return barangRepository.find10stokterendah();
     }
+
+    public List<Barang> cariBarang(String keyword) {
+        return barangRepository.findByKodeBarangContainingIgnoreCaseOrNamaBarangContainingIgnoreCase(keyword, keyword);
+    }
+    
+// @Repository
+// public class BarangRepository {
 }

@@ -1,0 +1,88 @@
+body{
+    width:320px;
+    margin:20px auto;
+    font-family:Consolas, monospace;
+    font-size:14px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+hr{
+    margin:15px 0;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    margin:6px 0;
+}
+
+.item-header{
+    display:flex;
+    justify-content:space-between;
+    font-weight:bold;
+    margin:8px 0;
+    /* border-bottom:1px dashed #000; */
+    padding-bottom:5px;
+}
+
+.item-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:8px 0;
+}
+
+.barang{
+    flex:2;
+}
+
+.qty{
+    flex:1;
+    text-align:center;
+}
+
+.harga{
+    flex:2;
+    text-align:right;
+}
+
+.payment-row{
+    display:flex;
+    justify-content:space-between;
+    margin:8px 0;
+    font-weight:bold;
+}
+
+.thanks{
+    text-align:center;
+    margin:20px 0;
+    font-weight:bold;
+}
+
+.button-group{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.button-group button{
+    width:100%;
+    padding:10px;
+    cursor:pointer;
+}
+
+@media print{
+
+    .button-group{
+        display:none;
+    }
+
+    body{
+        width:100%;
+        margin:0;
+    }
+}
