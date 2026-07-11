@@ -1,103 +1,173 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/* =========================
+   GENERAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-form {
-    width: 350px;
-    background-color: white;
-    padding: 30px;
-    border: 1px grey solid;
-    border-radius: 10px;
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f7fc;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:40px 20px;
 }
 
-.kode-barang-read {
-    background-color: rgb(238, 238, 238);
-    color: grey;
+h2{
+    color:#2563eb;
+    margin-bottom:30px;
+    font-size:34px;
 }
 
-input[type=text], input[type=number]{
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    transition: 0.3s;
+/* =========================
+   FORM
+========================= */
+
+form{
+    width:100%;
+    max-width:600px;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
 
-input[type=text], input[type=number]{
-    border-color: rgb(207, 207, 207);
-    outline: none;
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#444;
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    align-items: center;
+input,
+select{
+    width:100%;
+    padding:13px 15px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:15px;
+    transition:.3s;
 }
 
-
-.btn {
-    /* align-items: center;
-    justify-content: center; */
-    cursor: pointer;
-    padding: 8px; 
-    border-radius: 8px;
-    text-decoration: none;
-    color: white;
-    border: none;
-    transition: 0.3s;
-    font-size: medium;
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
 }
 
-.simpan-button{
-    background-color: rgb(60, 158, 255);
-    padding: 9px; 
-    width: 80%;
-    
+.kode-barang-read{
+    background:#f1f5f9;
+    color:#666;
 }
 
-.simpan-button:hover {
-    background-color: rgb(0, 125, 250);
-}
-
-.batal-button{
-    width: 50px;
-    background-color: rgb(255, 104, 104);
-}
-
-.batal-button:hover{
-    background-color: rgb(249, 44, 44);
-}
+/* =========================
+   SELECT
+========================= */
 
 .select-container{
-    position: relative;
-    width: 100%;
+    position:relative;
 }
 
 .select-container select{
-    width:100%;
-    padding:10px 40px 10px 10px; /* beri ruang untuk icon */
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
     appearance:none;
     -webkit-appearance:none;
     -moz-appearance:none;
+    padding-right:45px;
 }
 
 .select-container i{
     position:absolute;
-    right:15px;
+    right:16px;
     top:50%;
     transform:translateY(-50%);
-    font-size: 10px;
-    color: grey;
+    color:#666;
     pointer-events:none;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.buttons{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+}
+
+.btn{
+    flex:1;
+    padding:14px;
+    text-align:center;
+    text-decoration:none;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.simpan-button{
+    background:#2563eb;
+    color:white;
+}
+
+.simpan-button:hover{
+    background:#1d4ed8;
+}
+
+.batal-button{
+    background:#ef4444;
+    color:white;
+}
+
+.batal-button:hover{
+    background:#dc2626;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    body{
+        padding:20px;
+    }
+
+    h2{
+        font-size:28px;
+    }
+
+    form{
+        padding:25px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+}
+
+@media(max-width:480px){
+
+    h2{
+        font-size:24px;
+    }
+
+    form{
+        padding:20px;
+    }
+
+    input,
+    select{
+        font-size:14px;
+        padding:12px;
+    }
+
 }

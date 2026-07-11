@@ -1,0 +1,134 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f7fc;
+    padding:40px;
+    color:#333;
+}
+
+h2{
+    color:#3b82f6;
+    margin-bottom:30px;
+    font-size:32px;
+}
+
+/* ===========================
+   TABLE
+=========================== */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+th{
+    background:#3b82f6;
+    color:white;
+    padding:15px;
+    font-size:15px;
+    font-weight:600;
+    text-align:center;
+}
+
+td{
+    padding:15px;
+    text-align:center;
+    border-bottom:1px solid #eeeeee;
+}
+
+tr:nth-child(even){
+    background:#fafcff;
+}
+
+tr:hover{
+    background:#edf5ff;
+    transition:.2s;
+}
+
+/* ===========================
+   BUTTON AKSI
+=========================== */
+
+td a{
+    display:inline-block;
+    padding:8px 14px;
+    border-radius:8px;
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    text-decoration:none;
+    transition:.25s;
+    margin:2px;
+}
+
+/* Detail */
+
+td a:nth-child(1){
+    background:#3b82f6;
+}
+
+td a:nth-child(1):hover{
+    background:#2563eb;
+}
+
+
+/* Hapus */
+
+td a:nth-child(2){
+    background:#ef4444;
+}
+
+td a:nth-child(2):hover{
+    background:#dc2626;
+}
+
+/* ===========================
+   BACK BUTTON
+=========================== */
+
+.a-dashboard{
+    display:inline-block;
+    margin-top:30px;
+    background:#3b82f6;
+    color:white;
+    padding:12px 22px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.a-dashboard:hover{
+    background:#2563eb;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:900px){
+
+    body{
+        padding:20px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    h2{
+        font-size:26px;
+    }
+
+}

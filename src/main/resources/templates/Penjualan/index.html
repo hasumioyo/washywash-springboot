@@ -2,6 +2,7 @@
 <html xmls:th="http://www.thymeleaf.org">
 <head >
     <title>Riwayat</title>
+    <link rel="stylesheet" th:href="@{/css/penjualan/riwayat.css}">
 </head>
 
 <body>
@@ -32,13 +33,6 @@
                         Detail
                     </a>
 
-                    |
-
-                    <a th:href="@{/penjualan/strukpembayaran/{kode}(kode=${penjualan.kodePenjualan})}">
-                        Cetak
-                    </a>
-
-                    |
 
                     <a th:href="@{/penjualan/hapus/{kode}(kode=${penjualan.kodePenjualan})}"
                     onclick="return confirm('Yakin ingin menghapus transaksi ini?')">

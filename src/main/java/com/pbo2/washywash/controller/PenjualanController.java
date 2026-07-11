@@ -48,6 +48,37 @@ public class PenjualanController {
         this.penjualanRepository = penjualanRepository;
     }
 
+    private void loadHalamanPembayaran(Model model, HttpSession session, List<Barang> listBarang){
+        List<DetailPenjualan> basketBarang =
+                (List<DetailPenjualan>) session.getAttribute("basketBarang");
+
+        if(basketBarang == null){
+            basketBarang = new ArrayList<>();
+        }
+
+        Pelanggan pelanggan =
+                (Pelanggan) session.getAttribute("pelanggan");
+
+        Penjualan penjualan =
+                (Penjualan) session.getAttribute("penjualan");
+
+        if(penjualan == null){
+            penjualan = new Penjualan();
+        }
+
+        double total = 0;
+
+        for(DetailPenjualan d : basketBarang){
+            total += d.getSubTotal();
+        }
+
+        model.addAttribute("penjualan", penjualan);
+        model.addAttribute("details", basketBarang);
+        model.addAttribute("pelanggan", pelanggan);
+        model.addAttribute("listBarang", listBarang);
+        model.addAttribute("total", total);
+    }       
+
     private boolean belumLogin(HttpSession session) {
         return session.getAttribute("loggedInUser") == null;
     }
@@ -58,25 +89,27 @@ public class PenjualanController {
             return "redirect:/";
         }
 
-        List<DetailPenjualan> basketBarang = (List<DetailPenjualan>) session.getAttribute("basketBarang");
+        loadHalamanPembayaran(model, session, barangService.getAllBarang());
 
-        Pelanggan pelanggan = (Pelanggan) session.getAttribute("pelanggan");
+        // List<DetailPenjualan> basketBarang = (List<DetailPenjualan>) session.getAttribute("basketBarang");
 
-        if(basketBarang == null) {
-            basketBarang = new ArrayList<>();
-        }
+        // Pelanggan pelanggan = (Pelanggan) session.getAttribute("pelanggan");
 
-        double total = 0;
+        // if(basketBarang == null) {
+        //     basketBarang = new ArrayList<>();
+        // }
 
-        for (DetailPenjualan detail : basketBarang) {
-            total += detail.getSubTotal();
-        }
+        // double total = 0;
 
-        model.addAttribute("penjualan", new Penjualan());
-        model.addAttribute("details", basketBarang);
-        model.addAttribute("pelanggan", pelanggan);
-        model.addAttribute("listBarang", barangService.getAllBarang());
-        model.addAttribute("total", total);
+        // for (DetailPenjualan detail : basketBarang) {
+        //     total += detail.getSubTotal();
+        // }
+
+        // model.addAttribute("penjualan", new Penjualan());
+        // model.addAttribute("details", basketBarang);
+        // model.addAttribute("pelanggan", pelanggan);
+        // model.addAttribute("listBarang", barangService.getAllBarang());
+        // model.addAttribute("total", total);
         
 
         return "penjualan/form";
@@ -118,7 +151,7 @@ public class PenjualanController {
     @GetMapping("/hapus/{kodePenjualan}")
     public String hapus(@PathVariable String kodePenjualan) {
         penjualanService.hapusPenjualan(kodePenjualan);
-        return "redirect:/penjualan";
+        return "redirect:/penjualan/listpenjualan";
     }
 
     // @GetMapping("/{kodePenjualan}")
@@ -133,7 +166,7 @@ public class PenjualanController {
     //     return "penjualan/detail";
     // }
     
-    @GetMapping("/cari")
+    @GetMapping("/caripelanggan")
     public String cariPelanggan(@RequestParam String kodePelanggan, Model model, HttpSession session) {
         if(belumLogin(session)) {
             return "redirect:/";
@@ -147,13 +180,13 @@ public class PenjualanController {
 
         Pelanggan pelanggan = pelangganService.getPelangganbyKode(kodePelanggan);
 
-        model.addAttribute("penjualan", new Penjualan());
-        model.addAttribute("details", basketBarang);
-        model.addAttribute("listBarang", barangService.getAllBarang());
-        model.addAttribute("pelanggan", pelanggan);
+        // model.addAttribute("penjualan", new Penjualan());
+        // model.addAttribute("details", basketBarang);
+        // model.addAttribute("listBarang", barangService.getAllBarang());
+        // model.addAttribute("pelanggan", pelanggan);
 
         session.setAttribute("pelanggan", pelanggan); //simpan nama
-        
+        loadHalamanPembayaran(model, session, barangService.getAllBarang());
 
         return "penjualan/form";
     }
@@ -172,6 +205,7 @@ public class PenjualanController {
         if (basketBarang == null) {
             basketBarang = new ArrayList<>();
         }
+        
 
         // Jika stok habis
         if (barang.getStok() <= 0) {
@@ -220,11 +254,11 @@ public class PenjualanController {
         basketBarang.add(detail);
     }
 
-    // Simpan kembali basket ke session
-    session.setAttribute("basketBarang", basketBarang);
+        // Simpan kembali basket ke session
+        session.setAttribute("basketBarang", basketBarang);
 
-    return "redirect:/penjualan";
-}
+        return "redirect:/penjualan";
+    }
     
 
     @PostMapping("/bayar")
@@ -381,7 +415,7 @@ public class PenjualanController {
 
         model.addAttribute("penjualan", penjualan);
         model.addAttribute("details", detail);
-        model.addAttribute("mode", "detail");
+        model.addAttribute("mode", "print");
         model.addAttribute("pelanggan", penjualan.getPelanggan());
 
         return "penjualan/strukpembayaran";
@@ -399,6 +433,42 @@ public class PenjualanController {
 
         return "penjualan/detail";
     }
+
+    @GetMapping("/caribarang")
+    public String cariBarang(@RequestParam String keyword,
+                            HttpSession session,
+                            Model model) {
+
+        // List<DetailPenjualan> basketBarang =
+        //         (List<DetailPenjualan>) session.getAttribute("basketBarang");
+
+        // if (basketBarang == null) {
+        //     basketBarang = new ArrayList<>();
+        // }
+
+        // Pelanggan pelanggan =
+        //         (Pelanggan) session.getAttribute("pelanggan");
+
+        // double total = 0;
+
+        // for (DetailPenjualan detail : basketBarang) {
+        //     total += detail.getSubTotal();
+        // }
+
+        // model.addAttribute("penjualan", new Penjualan());
+        // model.addAttribute("details", basketBarang);
+        // model.addAttribute("pelanggan", pelanggan);
+
+        // hasil cari barangzzz
+        // model.addAttribute("listBarang", barangService.cariBarang(keyword));
+        loadHalamanPembayaran(model, session, barangService.cariBarang(keyword));
+
+        model.addAttribute("keyword", keyword);
+        // model.addAttribute("total", total);
+
+        return "penjualan/form";
+    }
+    
     
     
 

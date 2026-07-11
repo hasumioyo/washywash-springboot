@@ -13,6 +13,7 @@ import com.pbo2.washywash.service.PelangganService;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -81,6 +82,32 @@ public class PelangganController {
     //     return "redirect:/barang";
     // }
 
+    @GetMapping("/cari")
+    public String cariPelanggan(@RequestParam String keyword, Model model, HttpSession session) {
+        if(belumLogin(session)) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("listPelanggan", pelangganService.cariPelanggan(keyword));
+        
+        return "pelanggan/index";
+    }
+    
+
+    @GetMapping("/hapus/{kodePelanggan}")
+    public String hapusPelanggan(@PathVariable String kodePelanggan, RedirectAttributes redirectAttributes) {
+        // pelangganService.hapusPelanggan(kodePelanggan);
+
+        try {
+        pelangganService.hapusPelanggan(kodePelanggan);
+        redirectAttributes.addFlashAttribute("success", "Pelanggan berhasil dihapus.");
+        
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/pelanggan";
+    }
     
 
     

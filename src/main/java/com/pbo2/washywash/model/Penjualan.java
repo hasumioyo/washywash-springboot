@@ -33,6 +33,7 @@ public class Penjualan {
     @JoinColumn(name = "kode_pelanggan")
     private Pelanggan pelanggan;
 
+
     public String getKodePenjualan() {
         return kodePenjualan;
     }

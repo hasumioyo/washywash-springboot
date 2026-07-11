@@ -10,12 +10,12 @@
              <!-- <p>Kode : <span th:text="${penjualan.kodePenjualan}"></span></p> -->
             <p>Tanggal : <span th:text="${penjualan.tanggalPenjualan}"></span></p>
 
-            <form th:action="@{/penjualan/cari}" method="get">
+            <form th:action="@{/penjualan/caripelanggan}" method="get">
                 <input type="text" name="kodePelanggan" placeholder="Kode Pelanggan">
                 <button type="submit">Cari</button>
             </form>
             
-            <div th:if="${error}" style="color:red; font-weight:bold; margin:10px 0;">
+            <div th:if="${error}" class="error-message">
                 <span th:text="${error}"></span>
             </div>
 
@@ -51,13 +51,14 @@
                 <button type="submit">Bayar</button>
             </form>
              <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
-             <a th:href="@{/penjualan/strukpembayaran/{kode}
-            (kode=${penjualan.kodePenjualan})}">
-                Cetak Struk
-            </a>
         </section>
 
         <section class="split-right">
+                <form th:action="@{/penjualan/caribarang}" method="get">
+                    <input type="text" name="keyword" placeholder="Cari barang.." th:value="${keyword}">
+                    <button type="submit">Cari</button>
+                </form>
+            </nav>
             <table border="1">
                 <tr>
                     <th>Kode</th>

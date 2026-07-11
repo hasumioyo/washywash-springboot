@@ -1,6 +1,7 @@
 package com.pbo2.washywash.repository;
 
 import com.pbo2.washywash.model.Barang;
+import com.pbo2.washywash.model.Pelanggan;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface BarangRepository extends JpaRepository<Barang, String> {
     Barang findByKodeBarang(String kodeBarang);
+
 
     @Query(value = "SELECT kode_barang FROM barang ORDER BY kode_barang DESC LIMIT 1",
            nativeQuery = true)

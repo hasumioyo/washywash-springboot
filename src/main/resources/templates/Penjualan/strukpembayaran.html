@@ -6,115 +6,109 @@
 </head>
 <body>
 
-    <h2>WASHYWASH</h2>
+    <div class="receipt">
 
-    <hr>
+        <h2>WASHYWASH</h2>
 
-    <!-- Informasi Transaksi -->
-    <div class="info-row">
-        <span>Kode</span>
-        <span th:text="${penjualan.kodePenjualan}"></span>
+        <hr>
+
+        <!-- Informasi -->
+        <div class="info-row">
+            <span>Kode</span>
+            <span th:text="${penjualan.kodePenjualan}"></span>
+        </div>
+
+        <div class="info-row">
+            <span>Tanggal</span>
+            <span th:text="${#temporals.format(penjualan.tanggalPenjualan,'dd-MM-yyyy')}"></span>
+        </div>
+
+        <div class="info-row">
+            <span>Waktu</span>
+            <span th:text="${#temporals.format(penjualan.tanggalPenjualan,'HH:mm:ss')}"></span>
+        </div>
+
+        <div class="info-row">
+            <span>Kode Pelanggan</span>
+            <span th:text="${penjualan.pelanggan != null ? penjualan.pelanggan.kodePelanggan : '-'}"></span>
+        </div>
+
+        <div class="info-row">
+            <span>Nama Pelanggan</span>
+            <span th:text="${penjualan.pelanggan != null ? penjualan.pelanggan.namaPelanggan : '-'}"></span>
+        </div>
+
+        <hr>
+
+       <div class="item-header">
+            <span class="barang">Barang</span>
+            <span class="qty">Qty</span>
+            <span class="harga">Subtotal</span>
     </div>
 
-    <div class="info-row">
-        <span>Tanggal</span>
-        <span th:text="${#temporals.format(penjualan.tanggalPenjualan,'dd-MM-yyyy')}"></span>
-    </div>
-
-    <div class="info-row">
-        <span>Waktu</span>
-        <span th:text="${#temporals.format(penjualan.tanggalPenjualan,'HH:mm:ss')}"></span>
-    </div>
-
-    <div class="info-row">
-        <span>Kode Pelanggan</span>
-        <span th:text="${penjualan.pelanggan != null ? penjualan.pelanggan.kodePelanggan : '-'}"></span>
-    </div>
-
-    <div class="info-row">
-        <span>Nama Pelanggan</span>
-        <span th:text="${penjualan.pelanggan != null ? penjualan.pelanggan.namaPelanggan : '-'}"></span>
-    </div>
-
-    <hr>
-
-    <!-- Barang -->
-     <div class="item-header">
-        <span class="barang">Barang</span>
-        <span class="qty">Qty</span>
-        <span class="harga">Subtotal</span>
-    </div>
-
-    <hr>
-
-    <div th:each="d : ${details}" class="item-row">
-
-        <span class="barang"
-              th:text="${d.barang.namaBarang}">
-        </span>
+    <div class="item-row" th:each="d : ${details}">
+        <span class="barang" th:text="${d.barang.namaBarang}"></span>
 
         <span class="qty">
             x<span th:text="${d.qty}"></span>
         </span>
 
         <span class="harga"
-              th:text="'Rp ' + ${#numbers.formatDecimal(d.subTotal,0,'COMMA',2,'POINT')}">
+            th:text="'Rp ' + ${#numbers.formatDecimal(d.subTotal,0,'COMMA',2,'POINT')}">
         </span>
-
     </div>
 
-    <hr>
+        <!-- Pembayaran -->
+        <div class="payment-row">
+            <span>Total</span>
+            <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPenjualan,0,'COMMA',2,'POINT')}"></span>
+        </div>
 
-    <!-- Pembayaran -->
-    <div class="payment-row">
-        <span>Total</span>
-        <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPenjualan,0,'COMMA',2,'POINT')}"></span>
+        <div class="payment-row">
+            <span>Bayar</span>
+            <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPembayaran,0,'COMMA',2,'POINT')}"></span>
+        </div>
+
+        <div class="payment-row total">
+            <span>Kembali</span>
+            <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.hasilKembalian,0,'COMMA',2,'POINT')}"></span>
+        </div>
+
+        <hr>
+
+        <div class="thanks">
+            Terima Kasih Telah Menggunakan WashyWash
+        </div>
+
+        <!-- DETAIL -->
+        <div class="button-group" th:if="${mode == 'detail'}">
+
+            <a th:href="@{/penjualan/listpenjualan}">
+                <button type="button">Kembali</button>
+            </a>
+
+            <a th:href="@{/penjualan/detail/{kode}(kode=${penjualan.kodePenjualan})}">
+                <button type="button">Cetak Struk</button>
+            </a>
+
+        </div>
+
+        <!-- PRINT -->
+        <div class="button-group" th:if="${mode == 'print'}">
+
+            <button type="button" onclick="window.print()">
+                Cetak
+            </button>
+
+            <a th:href="@{/penjualan}">
+                <button type="button">
+                    Kembali
+                </button>
+            </a>
+
+        </div>
+
     </div>
-
-    <div class="payment-row">
-        <span>Bayar</span>
-        <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.totalPembayaran,0,'COMMA',2,'POINT')}"></span>
-    </div>
-
-    <div class="payment-row">
-        <span>Kembali</span>
-        <span th:text="'Rp ' + ${#numbers.formatDecimal(penjualan.hasilKembalian,0,'COMMA',2,'POINT')}"></span>
-    </div>
-
-    <hr>
-
-    <div class="thanks">
-        Terima Kasih Telah Menggunakan WashyWash
-    </div>
-
-    <div th:if="${mode == 'detail'}">
-        <a th:href="@{/penjualan/listpenjualan}">
-            <button>Kembali</button>
-        </a>
-        <a th:href="@{/penjualan/strukpembayaran/{kode}(kode=${penjualan.kodePenjualan})}">
-            <button>Cetak Struk</button>
-        </a>
-    </div>
-
-    <div th:if="${mode == 'print'}">
-        <button onclick="window.print()">Cetak</button>
-
-        <a th:href="@{/penjualan/listpenjualan}">
-            <button>Kembali</button>
-        </a>
-    </div>
-
-    <!-- <div class="button-group">
-        <button onclick="window.print()">Cetak Struk</button>
-
-        <a th:href="@{/penjualan/selesai}">
-            <button type="button">Transaksi Baru</button>
-        </a>
-
-        <a href="/dashboard">
-            <button type="button">Dashboard</button>
-        </a>
-    </div> -->
 
 </body>
 </html>

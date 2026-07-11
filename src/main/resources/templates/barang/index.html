@@ -3,24 +3,23 @@
     <head>
         <title>Manajemen Barang</title>
         <link rel="stylesheet" th:href="@{/css/index.css}">
-        <link rel="stylesheet" href="css/pico.min.css">
+        <!-- <link rel="stylesheet" href="css/pico.min.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     </head>
 
     <body>
         <h2>Manajemen Barang WashyWash</h2>
+        <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
 
-        <nav>
-            <div class="back">
-                <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
-                <a href="/logout" class="a-logout">Logout</a>
+        <nav class="nav-search-add">
+                <form th:action="@{/barang/cari}" method="get">
+                    <input type="text" name="keyword" placeholder="Cari barang..">
+                    <button type="submit">Cari</button>
+                </form>
+                <!-- <a href="/logout" class="a-logout">Logout</a> -->
+                <a href="/barang/tambah" class="a-tambah">Tambah Barang</a>
+
             </div>
-            <a href="/barang/tambah" class="a-tambah">Tambah Barang</a>
-
-            <form th:action="@{/barang/cari}" method="get">
-                <input type="text" name="keyword" placeholder="Cari barang..">
-                <button type="submit">Cari</button>
-            </form>
         </nav>
 
 

@@ -6,13 +6,16 @@ import org.springframework.stereotype.Service;
 
 import com.pbo2.washywash.model.Pelanggan;
 import com.pbo2.washywash.repository.PelangganRepository;
+import com.pbo2.washywash.repository.PenjualanRepository;
 
 @Service
 public class PelangganService {
     private final PelangganRepository pelangganRepository;
+    private final PenjualanRepository penjualanRepository;
 
-    public PelangganService(PelangganRepository pelangganRepository) {
+    public PelangganService(PelangganRepository pelangganRepository, PenjualanRepository penjualanRepository) {
         this.pelangganRepository = pelangganRepository;
+        this.penjualanRepository = penjualanRepository;
     }
 
     public String generateKodePelanggan(String name) {
@@ -44,4 +47,20 @@ public class PelangganService {
         }
         pelangganRepository.save(pelanggan);
     }
+
+    public List<Pelanggan> cariPelanggan(String keyword) {
+        return pelangganRepository.findByKodePelangganContainingIgnoreCaseOrNamaPelangganIgnoreCase(keyword, keyword);
+    }
+
+    public void hapusPelanggan(String kodePelanggan) {
+
+        Pelanggan pelanggan = getPelangganbyKode(kodePelanggan);
+
+        if(penjualanRepository.existsByPelanggan(pelanggan)) {
+            throw new IllegalArgumentException("Pelanggan masih memiliki riwayat penjualan. Hapus riwayat penjualan terlebih dahulu.");
+        }
+        
+        pelangganRepository.deleteById(kodePelanggan);
+    }
+
 }

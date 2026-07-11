@@ -1,0 +1,160 @@
+/* ==========================
+   GENERAL
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f7fc;
+    color:#333;
+    padding:40px;
+}
+
+h2{
+    color:#3b82f6;
+    margin-bottom:25px;
+}
+
+h3{
+    color:#3b82f6;
+    margin:30px 0 15px;
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.card{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    padding:25px;
+    margin-bottom:25px;
+}
+
+/* ==========================
+   TABLE
+========================== */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,.05);
+    margin-bottom:25px;
+}
+
+th{
+    background:#3b82f6;
+    color:white;
+    padding:14px;
+    text-align:center;
+    font-weight:bold;
+}
+
+td{
+    padding:14px;
+    border-bottom:1px solid #eee;
+}
+
+tr:nth-child(even){
+    background:#fafcff;
+}
+
+tr:hover{
+    background:#edf5ff;
+}
+
+/* ==========================
+   INFO TABLE
+========================== */
+
+.info td:first-child{
+    width:220px;
+    font-weight:bold;
+    background:#f8f9fc;
+}
+
+/* ==========================
+   TOTAL TABLE
+========================== */
+
+.total td:first-child{
+    width:220px;
+    font-weight:bold;
+    background:#f8f9fc;
+}
+
+.total td:last-child{
+    text-align:right;
+    font-weight:bold;
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+.button-group{
+    margin-top:25px;
+    display:flex;
+    gap:15px;
+}
+
+.button-group a{
+    text-decoration:none;
+}
+
+button{
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    background:#3b82f6;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#2563eb;
+}
+
+.button-secondary{
+    background:#6b7280;
+}
+
+.button-secondary:hover{
+    background:#4b5563;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:768px){
+
+    body{
+        padding:20px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+    }
+
+    .button-group{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
+    }
+
+}

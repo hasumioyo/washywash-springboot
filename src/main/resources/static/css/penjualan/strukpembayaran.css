@@ -1,88 +1,306 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
 body{
-    width:320px;
-    margin:20px auto;
-    font-family:Consolas, monospace;
-    font-size:14px;
+    background:#eef4ff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:30px;
+}
+
+.receipt{
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
 }
 
 h2{
     text-align:center;
-    margin-bottom:15px;
+    color:#2563eb;
+    margin-bottom:20px;
+    letter-spacing:2px;
 }
 
 hr{
-    margin:15px 0;
+    border:none;
+    border-top:1px dashed #bbb;
+    margin:18px 0;
 }
+
+/* ========================= */
+/* INFO */
+/* ========================= */
 
 .info-row{
     display:flex;
     justify-content:space-between;
-    margin:6px 0;
+    margin:10px 0;
+    font-size:14px;
+}
+
+.info-row span:first-child{
+    color:#666;
+    font-weight:bold;
+}
+
+/* ========================= */
+/* BARANG */
+/* ========================= */
+
+.item-header,
+.item-row{
+    display: grid;
+    grid-template-columns: 1fr 70px 170px;
+    align-items: center;
+    column-gap: 10px;
 }
 
 .item-header{
-    display:flex;
-    justify-content:space-between;
-    font-weight:bold;
-    margin:8px 0;
-    /* border-bottom:1px dashed #000; */
-    padding-bottom:5px;
+    background: #2563eb;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .item-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:8px 0;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
 }
 
-.barang{
-    flex:2;
+.item-header .barang,
+.item-row .barang{
+    text-align: left;
 }
 
-.qty{
-    flex:1;
-    text-align:center;
+.item-header .qty,
+.item-row .qty{
+    text-align: center;
 }
 
-.harga{
-    flex:2;
-    text-align:right;
+.item-header .harga,
+.item-row .harga{
+    text-align: right;
 }
+
+/* ========================= */
+/* PEMBAYARAN */
+/* ========================= */
 
 .payment-row{
     display:flex;
     justify-content:space-between;
-    margin:8px 0;
-    font-weight:bold;
+    margin:10px 0;
 }
+
+.total{
+    font-weight:bold;
+    color:#2563eb;
+    font-size:17px;
+}
+
+/* ========================= */
 
 .thanks{
     text-align:center;
-    margin:20px 0;
-    font-weight:bold;
+    color:#666;
+    font-style:italic;
+    margin:25px 0;
 }
+
+/* ========================= */
+/* BUTTON */
+/* ========================= */
 
 .button-group{
     display:flex;
-    flex-direction:column;
-    gap:10px;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.button-group a{
+    text-decoration:none;
 }
 
 .button-group button{
-    width:100%;
-    padding:10px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
     cursor:pointer;
+    font-size:15px;
+    transition:.3s;
 }
+
+.button-group button:hover{
+    background:#1d4ed8;
+}
+
+/* ========================= */
+/* PRINT STYLE */
+/* ========================= */
 
 @media print{
 
-    .button-group{
-        display:none;
+    @page{
+        size:60mm auto;
+        margin:3mm;
     }
 
-    body{
-        width:100%;
-        margin:0;
+    *{
+        font-family:Consolas,"Lucida Console","Courier New",monospace !important;
+        color:#000 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+        text-shadow:none !important;
+        font-size:9px !important;
+        line-height:1.15 !important;
     }
+
+    html,
+    body{
+        width:50mm;
+        margin:0;
+        padding:0;
+        background:#fff;
+        display:block;
+    }
+
+    .receipt{
+        width:100%;
+        max-width:100%;
+        margin:0;
+        padding:0;
+        border:none;
+        border-radius:0;
+        box-shadow:none;
+    }
+
+    /* ===== Judul ===== */
+
+    h2{
+        text-align:center;
+        font-size:16px !important;
+        font-weight:bold;
+        letter-spacing:1px;
+        margin-bottom:6px;
+        color:#000 !important;
+    }
+
+    hr{
+        border:none;
+        border-top:1px dashed #000;
+        margin:5px 0;
+    }
+
+    /* ===== Informasi ===== */
+
+    .info-row{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin:2px 0;
+    }
+
+    .info-row span:first-child{
+        font-weight:bold;
+    }
+
+    /* ===== Barang ===== */
+
+    .item-header,
+    .item-row{
+        display:grid;
+        grid-template-columns:1.8fr 40px 95px;
+        align-items:center;
+        column-gap:5px;
+    }
+
+    .item-header{
+        background:none !important;
+        border-top:1px solid #000;
+        border-bottom:1px solid #000;
+        border-radius:0;
+        padding:4px 0;
+        font-weight:bold;
+    }
+
+    .item-row{
+        padding:2px 0;
+        border-bottom:none;
+    }
+
+    .barang{
+        text-align:left;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .qty{
+        text-align:center;
+    }
+
+    .harga{
+        text-align:right;
+    }
+
+    /* ===== Pembayaran ===== */
+
+    .payment-row{
+        display:flex;
+        justify-content:space-between;
+        margin:2px 0;
+    }
+
+    .total{
+        font-weight:bold;
+    }
+
+    /* ===== Terima kasih ===== */
+
+    .thanks{
+        text-align:center;
+        margin-top:8px;
+        font-weight:bold;
+        font-size:9px !important;
+    }
+
+    /* ===== Tombol ===== */
+
+    .button-group{
+        display:none !important;
+    }
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media(max-width:480px){
+
+    .receipt{
+        padding:20px;
+    }
+
+    .button-group{
+        flex-direction:column;
+    }
+
+    .button-group button{
+        width:100%;
+    }
+
 }
