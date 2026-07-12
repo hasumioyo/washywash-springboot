@@ -2,6 +2,7 @@ package com.pbo2.washywash.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 
@@ -47,5 +48,21 @@ public class PenjualanService {
         return penjualanRepository.findById(kodePenjualan).orElseThrow(() -> new IllegalArgumentException("Penjualan tidak ditemukan"));
     }
 
-    
+    public List<Penjualan> getLaporanBulanan(int bulan, int tahun){
+        return penjualanRepository.findLaporanBulanan(bulan, tahun);
+    }
+
+    public Double getTotalPendapatanBulanan(int bulan, int tahun) {
+        Double total = penjualanRepository.getTotalPendapatanBulanan(bulan, tahun);
+
+        return total == null ? 0.0 : total;
+    }
+
+    public Long getJumlahTransaksiBulanan(int bulan, int tahun) {
+        return penjualanRepository.getJumlahTransaksiBulanan(bulan, tahun);
+    }
+
+    public List<Penjualan> cariPenjualan(String keyword) {
+        return penjualanRepository.cariKodePenjualan(keyword);
+    }
 }

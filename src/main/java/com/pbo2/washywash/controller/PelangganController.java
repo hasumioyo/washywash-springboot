@@ -62,10 +62,7 @@ public class PelangganController {
     }
 
     @GetMapping("/edit/{kodePelanggan}")
-    public String editForm(
-            @PathVariable String kodePelanggan,
-            HttpSession session,
-            Model model) {
+    public String editForm(@PathVariable String kodePelanggan, HttpSession session, Model model) {
 
         if (belumLogin(session)) {
             return "redirect:/";
@@ -73,14 +70,14 @@ public class PelangganController {
 
         model.addAttribute("pelanggan", pelangganService.getPelangganbyKode(kodePelanggan));
         model.addAttribute("mode", "edit");
-        return "pelanggan/form";
+        return "pelanggan/formpelanggan";
     }
 
-    // @PostMapping("/update")
-    // public String update(@ModelAttribute Pelanggan pelanggan) {
-    //     pelangganService.updatePelanggan(pelanggan);
-    //     return "redirect:/barang";
-    // }
+    @PostMapping("/update")
+    public String update(@ModelAttribute Pelanggan pelanggan) {
+        pelangganService.updatePelanggan(pelanggan);
+        return "redirect:/pelanggan";
+    }
 
     @GetMapping("/cari")
     public String cariPelanggan(@RequestParam String keyword, Model model, HttpSession session) {

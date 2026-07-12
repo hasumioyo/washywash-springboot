@@ -6,51 +6,85 @@ import org.springframework.stereotype.Service;
 
 import com.pbo2.washywash.model.Barang;
 import com.pbo2.washywash.repository.BarangRepository;
+import com.pbo2.washywash.repository.DetailPenjualanRepository;
 
 @Service
 public class BarangService {
     
     private final BarangRepository barangRepository;
+    private final DetailPenjualanRepository detailPenjualanRepository;
 
-    public BarangService(BarangRepository barangRepository) {
+    public BarangService(BarangRepository barangRepository, DetailPenjualanRepository detailPenjualanRepository) {
         this.barangRepository = barangRepository;
+        this.detailPenjualanRepository = detailPenjualanRepository;
     }
 
     public List<Barang> getAllBarang() {
-        return barangRepository.findAll();
+        return barangRepository.findByStatus("Aktif");
     }
 
     public Barang getBarangByKode(String kodeBarang) {
-        return barangRepository.findByKodeBarang(kodeBarang);
+        return barangRepository.findBarangAktifByKode(kodeBarang);
     }
 
     public void tambahBarang(Barang barang) {
-
         if (barang.getKodeBarang() == null || barang.getKodeBarang().isEmpty()) {
-            barang.setKodeBarang(generateKodeBarang());
+            barang.setKodeBarang(generateKodeBarang(barang.getNamaBarang()));
         }
+
+        barang.setStatus("Aktif");
         barangRepository.save(barang);
     }
 
     public void updateBarang(Barang barang) {
-        barangRepository.save(barang);
-    }
 
-    public void hapusBarang(String kodeBarang) {
-        barangRepository.deleteById(kodeBarang);
-    }
-
-    public String generateKodeBarang() {
-
-        String lastKode = barangRepository.findLastKodeBarang();
-
-        if (lastKode == null) {
-            return "BRG0001";
+       Barang lama = barangRepository.findBarangAktifByKode(barang.getKodeBarang());
+        if (lama == null) {
+            throw new RuntimeException("Barang tidak ditemukan");
         }
 
-        int angka = Integer.parseInt(lastKode.substring(3));
+        lama.setNamaBarang(barang.getNamaBarang());
+        lama.setKategori(barang.getKategori());
+        lama.setSatuan(barang.getSatuan());
+        lama.setHarga(barang.getHarga());
+        lama.setStok(barang.getStok());
 
-        return "BRG" + String.format("%04d", angka + 1);
+        barangRepository.save(lama);
+    }
+    
+    public void hapusBarang(String kodeBarang) {
+        if (detailPenjualanRepository.existsByBarang_KodeBarang(kodeBarang)) {
+            throw new IllegalArgumentException(
+                    "Barang tidak dapat dihapus karena sudah pernah digunakan dalam transaksi.");
+        }
+
+        Barang barang = barangRepository.findByKodeBarang(kodeBarang);
+
+        if (barang != null) {
+            barang.setStatus("Tidak Aktif");
+            barangRepository.save(barang);
+        }
+    }
+
+    public String generateKodeBarang(String namaBarang) {
+
+        String prefix = namaBarang.replaceAll("\\s+", "").toUpperCase();
+
+        if (prefix.length() >= 3) {
+            prefix = prefix.substring(0, 3);
+        } else {
+            while (prefix.length() < 3) {
+                prefix += "X";
+            }
+        }
+        String lastKode = barangRepository.findLastKodeBarangByPrefix(prefix);
+
+        if (lastKode == null) {
+            return prefix + "001";
+        }
+
+        int nomor = Integer.parseInt(lastKode.substring(3));
+        return prefix + String.format("%03d", nomor + 1);
     }
 
     public List<Barang> getStokBarang10Terendah() {
@@ -58,8 +92,8 @@ public class BarangService {
     }
 
     public List<Barang> cariBarang(String keyword) {
-        return barangRepository.findByKodeBarangContainingIgnoreCaseOrNamaBarangContainingIgnoreCase(keyword, keyword);
-    }
+    return barangRepository.findByStatusAndKeyword("Aktif", keyword);
+}
     
 // @Repository
 // public class BarangRepository {

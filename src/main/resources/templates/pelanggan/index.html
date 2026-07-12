@@ -6,8 +6,11 @@
     </head>
 
     <body>
-        <h2>Pelanggan</h2>
-        <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+        <div class="titles">
+            <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+            <h2>Pelanggan</h2>
+        </div>
+        <br><br>
         <nav class="nav-search-add">
                 <form th:action="@{/pelanggan/cari}" method="get">
                     <input type="text" name="keyword" placeholder="Cari Pelanggan..">
@@ -17,8 +20,7 @@
 
         </nav>
 
-
-        <br><br>
+        <br>
         <div th:if="${success}" class="success-message">
             <span th:text="${success}"></span>
         </div>
@@ -26,26 +28,30 @@
         <div th:if="${error}" class="error-message">
             <span th:text="${error}"></span>
         </div>
-        <table border="1" cellpadding="8">
-            <tr>
-                <th>Kode Pelanggan</th>
-                <th>Nama</th>
-                <th>No Handphone</th>
-                <th>Email</th>
-                <th>Aksi</th>
-    
-            </tr>
-            <tr th:each="pelanggan : ${listPelanggan}">
-                <td th:text="${pelanggan.kodePelanggan}"></td>
-                <td th:text="${pelanggan.namaPelanggan}"></td>
-                <td th:text="${pelanggan.noHP}"></td>
-                <td th:text="${pelanggan.Email}"></td>
-                <td>
-                    <a th:href="@{/pelanggan/edit/{kode}(kode=${pelanggan.kodePelanggan})}" class="a-edit">Edit</a>
-                    |
-                    <a th:href="@{/pelanggan/hapus/{kode}(kode=${pelanggan.kodePelanggan})}" class="a-hapus" onclick="return confirm('Yakin ingin menghapus pelanggan ini?')">Hapus</a>
-                </td>
-            </tr>
-        </table>
+
+        <div class="container">
+
+            <table border="1" cellpadding="8">
+                <tr>
+                    <th>Kode Pelanggan</th>
+                    <th>Nama</th>
+                    <th>No Handphone</th>
+                    <th>Email</th>
+                    <th>Aksi</th>
+        
+                </tr>
+                <tr th:each="pelanggan : ${listPelanggan}">
+                    <td th:text="${pelanggan.kodePelanggan}"></td>
+                    <td th:text="${pelanggan.namaPelanggan}"></td>
+                    <td th:text="${pelanggan.noHP}"></td>
+                    <td th:text="${pelanggan.Email}"></td>
+                    <td>
+                        <a th:href="@{/pelanggan/edit/{kode}(kode=${pelanggan.kodePelanggan})}" class="a-edit">Edit</a>
+                        |
+                        <a th:href="@{/pelanggan/hapus/{kode}(kode=${pelanggan.kodePelanggan})}" class="a-hapus" onclick="return confirm('Yakin ingin menghapus pelanggan ini?')">Hapus</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

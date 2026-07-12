@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Laporan Penjualan Bulanan</title>
+    <link rel="stylesheet" th:href="@{/css/laporan/laporanprint.css}">
+</head>
+<body>
+
+<div class="report">
+
+    <h2>WASHYWASH LAUNDRY</h2>
+    <h3>LAPORAN PENJUALAN BULANAN</h3>
+
+    <p>
+        Bulan :
+        <span th:text="${bulan}"></span>
+        /
+        <span th:text="${tahun}"></span>
+    </p>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>No</th>
+            <th>Kode</th>
+            <th>Tanggal</th>
+            <th>Pelanggan</th>
+            <th>Total</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="p,stat : ${laporan}">
+
+            <td th:text="${stat.count}"></td>
+
+            <td th:text="${p.kodePenjualan}"></td>
+
+            <td th:text="${#temporals.format(p.tanggalPenjualan,'dd-MM-yyyy')}"></td>
+
+            <td th:text="${p.pelanggan != null ? p.pelanggan.namaPelanggan : '-'}"></td>
+
+            <td th:text="'Rp ' + ${#numbers.formatDecimal(p.totalPenjualan,0,'COMMA',2,'POINT')}"></td>
+
+        </tr>
+
+        </tbody>
+
+        <tfoot>
+
+        <tr>
+
+            <td colspan="4">
+                <p>Total Pendapatan</p>
+            </td>
+
+            <td>
+                <p th:text="'Rp ' + ${#numbers.formatDecimal(totalPendapatan,0,'COMMA',2,'POINT')}"></p>
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td colspan="4">
+                <p>Jumlah Transaksi</p>
+            </td>
+
+            <td>
+                <p th:text="${jumlahTransaksi}"></p>
+            </td>
+
+        </tr>
+
+        </tfoot>
+
+    </table>
+
+    <div class="button-group">
+
+        <button onclick="window.print()">
+            Cetak
+        </button>
+
+        <a th:href="@{/penjualan/laporan(bulan=${bulan},tahun=${tahun})}">
+            <button type="button">
+                Kembali
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

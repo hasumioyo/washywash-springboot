@@ -33,6 +33,10 @@ public class Penjualan {
     @JoinColumn(name = "kode_pelanggan")
     private Pelanggan pelanggan;
 
+    @ManyToOne
+    @JoinColumn(name = "username")
+    private User user;
+
 
     public String getKodePenjualan() {
         return kodePenjualan;
@@ -90,6 +94,12 @@ public class Penjualan {
         this.hasilKembalian = hasilKembalian;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
     
 }

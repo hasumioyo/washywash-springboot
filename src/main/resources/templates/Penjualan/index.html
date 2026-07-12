@@ -6,7 +6,19 @@
 </head>
 
 <body>
-    <h2>Riwayat WashyWash</h2>
+    <div class="titles">
+            <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+            <h2>Riwayat Penjualan</h2>
+    </div>  
+
+    <br><br>
+    <nav class="nav-search-add">
+                <form th:action="@{/penjualan/cari}" method="get">
+                    <input type="text" name="keyword" placeholder="Cari Kode Penjualan...">
+                    <button type="submit">Cari</button>
+                </form>
+    </nav>
+    <br>
 
     <table border="1" cellpadding="8">
             <tr>
@@ -41,6 +53,6 @@
                 </td>
             </tr>
         </table>
-        <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+        
 </body>
 </html>

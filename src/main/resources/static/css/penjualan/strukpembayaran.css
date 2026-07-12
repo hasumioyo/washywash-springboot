@@ -36,9 +36,7 @@ hr{
     margin:18px 0;
 }
 
-/* ========================= */
-/* INFO */
-/* ========================= */
+
 
 .info-row{
     display:flex;
@@ -52,9 +50,7 @@ hr{
     font-weight:bold;
 }
 
-/* ========================= */
-/* BARANG */
-/* ========================= */
+
 
 .item-header,
 .item-row{
@@ -93,9 +89,7 @@ hr{
     text-align: right;
 }
 
-/* ========================= */
-/* PEMBAYARAN */
-/* ========================= */
+
 
 .payment-row{
     display:flex;
@@ -109,7 +103,7 @@ hr{
     font-size:17px;
 }
 
-/* ========================= */
+
 
 .thanks{
     text-align:center;
@@ -118,9 +112,7 @@ hr{
     margin:25px 0;
 }
 
-/* ========================= */
-/* BUTTON */
-/* ========================= */
+
 
 .button-group{
     display:flex;
@@ -147,10 +139,6 @@ hr{
 .button-group button:hover{
     background:#1d4ed8;
 }
-
-/* ========================= */
-/* PRINT STYLE */
-/* ========================= */
 
 @media print{
 
@@ -243,11 +231,11 @@ hr{
     }
 
     .barang{
-        text-align:left;
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
-    }
+    text-align:left;
+    white-space:normal;
+    word-break:break-word;
+    overflow:visible;
+}
 
     .qty{
         text-align:center;

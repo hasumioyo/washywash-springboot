@@ -1,6 +1,3 @@
-/* =========================
-   GENERAL
-========================= */
 
 *{
     margin:0;
@@ -22,10 +19,6 @@ h2{
     margin-bottom:30px;
     font-size:34px;
 }
-
-/* =========================
-   FORM
-========================= */
 
 form{
     width:100%;
@@ -65,9 +58,6 @@ select:focus{
     color:#666;
 }
 
-/* =========================
-   SELECT
-========================= */
 
 .select-container{
     position:relative;
@@ -89,9 +79,6 @@ select:focus{
     pointer-events:none;
 }
 
-/* =========================
-   BUTTON
-========================= */
 
 .buttons{
     display:flex;
@@ -130,9 +117,7 @@ select:focus{
     background:#dc2626;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+
 
 @media(max-width:768px){
 

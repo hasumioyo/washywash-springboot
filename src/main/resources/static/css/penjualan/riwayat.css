@@ -12,14 +12,10 @@ body{
 }
 
 h2{
-    color:#3b82f6;
+    color:#2563eb;
     margin-bottom:30px;
     font-size:32px;
 }
-
-/* ===========================
-   TABLE
-=========================== */
 
 table{
     width:100%;
@@ -31,7 +27,7 @@ table{
 }
 
 th{
-    background:#3b82f6;
+    background:#2563eb;
     color:white;
     padding:15px;
     font-size:15px;
@@ -54,9 +50,42 @@ tr:hover{
     transition:.2s;
 }
 
-/* ===========================
-   BUTTON AKSI
-=========================== */
+.nav-search-add form{
+    display:flex;
+    gap:12px;
+    flex:1;
+    min-width:280px;
+}
+
+.nav-search-add input{
+    flex:1;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1px solid #d1d5db;
+    font-size:16px;
+    transition:.3s;
+}
+
+.nav-search-add input:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 5px rgba(79,142,247,.4);
+}
+
+.nav-search-add button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:0 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    transition:.3s;
+}
+
+.nav-search-add button:hover{
+    background:#1d4ed8;
+}
 
 td a{
     display:inline-block;
@@ -91,29 +120,29 @@ td a:nth-child(2):hover{
     background:#dc2626;
 }
 
-/* ===========================
-   BACK BUTTON
-=========================== */
 
 .a-dashboard{
     display:inline-block;
-    margin-top:30px;
-    background:#3b82f6;
+    margin-bottom:25px;
+    background:#2563eb;
     color:white;
-    padding:12px 22px;
-    border-radius:10px;
+    padding:12px 24px;
     text-decoration:none;
-    font-weight:bold;
+    border-radius:10px;
     transition:.3s;
+    font-weight:bold;
 }
 
 .a-dashboard:hover{
-    background:#2563eb;
+    background:#1d4ed8;
 }
 
-/* ===========================
-   RESPONSIVE
-=========================== */
+
+.titles {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 @media(max-width:900px){
 

@@ -63,4 +63,18 @@ public class PelangganService {
         pelangganRepository.deleteById(kodePelanggan);
     }
 
+    public void updatePelanggan(Pelanggan pelanggan) {
+        Pelanggan lama = pelangganRepository.findByKodePelanggan(pelanggan.getKodePelanggan());
+
+        if (lama == null) {
+            throw new RuntimeException("Pelanggan tidak ditemukan.");
+        }
+
+        lama.setNamaPelanggan(pelanggan.getNamaPelanggan());
+        lama.setNoHP(pelanggan.getNoHP());
+        lama.setEmail(pelanggan.getEmail());
+
+        pelangganRepository.save(lama);
+    }
+
 }

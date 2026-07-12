@@ -13,6 +13,7 @@ import com.pbo2.washywash.service.BarangService;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -46,16 +47,22 @@ public class BarangController {
         }
 
         Barang barang = new Barang();
-        barang.setKodeBarang(barangService.generateKodeBarang());
-        System.out.println(barang.getKodeBarang());
+
         model.addAttribute("barang", barang);
         model.addAttribute("mode", "tambah");
+
         return "barang/form";
     }
 
     @PostMapping("/simpan")
     public String simpan(@ModelAttribute Barang barang) {
+
+        // barang.setKodeBarang(
+        //     barangService.generateKodeBarang(barang.getKategori())
+        // );
+
         barangService.tambahBarang(barang);
+
         return "redirect:/barang";
     }
 
@@ -76,13 +83,19 @@ public class BarangController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute Barang barang) {
-        barangService.updateBarang(barang);
-        return "redirect:/barang";
-    }
+            barangService.updateBarang(barang);
+            return "redirect:/barang";
+        }
 
     @GetMapping("/hapus/{kodeBarang}")
-    public String hapus(@PathVariable String kodeBarang) {
-        barangService.hapusBarang(kodeBarang);
+    public String hapus(@PathVariable String kodeBarang, RedirectAttributes redirectAttributes) {
+        try {
+            barangService.hapusBarang(kodeBarang);
+            redirectAttributes.addFlashAttribute("success", "Barang berhasil dihapus.");
+
+        } catch (IllegalArgumentException e) {
+              redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
         return "redirect:/barang";
     }
 

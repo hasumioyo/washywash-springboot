@@ -1,6 +1,4 @@
-/* ==========================
-   GENERAL
-========================== */
+
 
 *{
     margin:0;
@@ -25,10 +23,6 @@ h3{
     margin:30px 0 15px;
 }
 
-/* ==========================
-   CARD
-========================== */
-
 .card{
     background:#fff;
     border-radius:16px;
@@ -37,9 +31,7 @@ h3{
     margin-bottom:25px;
 }
 
-/* ==========================
-   TABLE
-========================== */
+
 
 table{
     width:100%;
@@ -72,9 +64,6 @@ tr:hover{
     background:#edf5ff;
 }
 
-/* ==========================
-   INFO TABLE
-========================== */
 
 .info td:first-child{
     width:220px;
@@ -82,9 +71,6 @@ tr:hover{
     background:#f8f9fc;
 }
 
-/* ==========================
-   TOTAL TABLE
-========================== */
 
 .total td:first-child{
     width:220px;
@@ -97,9 +83,7 @@ tr:hover{
     font-weight:bold;
 }
 
-/* ==========================
-   BUTTON
-========================== */
+
 
 .button-group{
     margin-top:25px;
@@ -134,9 +118,6 @@ button:hover{
     background:#4b5563;
 }
 
-/* ==========================
-   RESPONSIVE
-========================== */
 
 @media(max-width:768px){
 

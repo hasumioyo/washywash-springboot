@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Laporan Penjualan Bulanan</title>
+    <link rel="stylesheet" th:href="@{/css/laporan/laporan.css}">
+</head>
+
+<body>
+
+   <div class="titles">
+            <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+            <h2>Laporan</h2>
+    </div> 
+    <br><br>
+
+    <form th:action="@{/penjualan/laporan}" method="get">
+
+        <label>Bulan</label>
+
+        <select name="bulan">
+            <option value="1" th:selected="${bulan == 1}">Januari</option>
+            <option value="2" th:selected="${bulan == 2}">Februari</option>
+            <option value="3" th:selected="${bulan == 3}">Maret</option>
+            <option value="4" th:selected="${bulan == 4}">April</option>
+            <option value="5" th:selected="${bulan == 5}">Mei</option>
+            <option value="6" th:selected="${bulan == 6}">Juni</option>
+            <option value="7" th:selected="${bulan == 7}">Juli</option>
+            <option value="8" th:selected="${bulan == 8}">Agustus</option>
+            <option value="9" th:selected="${bulan == 9}">September</option>
+            <option value="10" th:selected="${bulan == 10}">Oktober</option>
+            <option value="11" th:selected="${bulan == 11}">November</option>
+            <option value="12" th:selected="${bulan == 12}">Desember</option>
+        </select>
+
+        <label>Tahun</label>
+        <input type="number" name="tahun" th:value="${tahun}">
+        <button type="submit">
+            Tampilkan
+        </button>
+    </form>
+
+    <br>
+
+    <!-- Pesan jika tidak ada data -->
+    <p th:if="${pesan}"
+       style="color:red; font-weight:bold;"
+       th:text="${pesan}">
+    </p>
+
+    <!-- Tabel hanya tampil jika ada data -->
+    <table border="1" th:if="${!#lists.isEmpty(laporan)}">
+
+        <tr>
+            <th>Kode</th>
+            <th>Tanggal</th>
+            <th>Pelanggan</th>
+            <th>Total</th>
+        </tr>
+
+        <tr th:each="p : ${laporan}">
+
+            <td th:text="${p.kodePenjualan}"></td>
+
+            <td th:text="${#temporals.format(p.tanggalPenjualan,'dd-MM-yyyy')}"></td>
+
+            <td th:text="${p.pelanggan != null ? p.pelanggan.namaPelanggan : '-'}"></td>
+
+            <td th:text="'Rp ' + ${#numbers.formatDecimal(p.totalPenjualan,0,'COMMA',2,'POINT')}"></td>
+
+        </tr>
+
+    </table>
+
+    <div th:if="${!#lists.isEmpty(laporan)}">
+
+        <br>
+
+        <h3>
+            Jumlah Transaksi :
+            <span th:text="${jumlahTransaksi}"></span>
+        </h3>
+
+        <h3>
+            Total Pendapatan :
+            <span th:text="'Rp ' + ${#numbers.formatDecimal(totalPendapatan,0,'COMMA',2,'POINT')}"></span>
+        </h3>
+
+        <br>
+
+    </div>
+
+    <div class="button-group">
+
+        <a th:if="${!#lists.isEmpty(laporan)}"
+           th:href="@{/penjualan/laporan/print(bulan=${bulan},tahun=${tahun})}">
+            <button type="button">
+                Cetak Laporan
+            </button>
+        </a>
+
+    </div>
+
+</body>
+</html>

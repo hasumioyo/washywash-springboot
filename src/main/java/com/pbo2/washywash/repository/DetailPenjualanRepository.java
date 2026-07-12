@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DetailPenjualanRepository extends JpaRepository<DetailPenjualan, Long>{
     List<DetailPenjualan> findByPenjualan_KodePenjualan(String kodePenjualan);
+
+     boolean existsByBarang_KodeBarang(String kodeBarang);
 }

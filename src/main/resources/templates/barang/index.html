@@ -8,9 +8,11 @@
     </head>
 
     <body>
-        <h2>Manajemen Barang WashyWash</h2>
-        <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
-
+        <div class="titles">
+            <a href="/dashboard" class="a-dashboard">Kembali ke Dasboard</a>
+            <h2>Manajemen Barang WashyWash</h2>
+        </div>  
+        <br><br>
         <nav class="nav-search-add">
                 <form th:action="@{/barang/cari}" method="get">
                     <input type="text" name="keyword" placeholder="Cari barang..">
@@ -22,32 +24,45 @@
             </div>
         </nav>
 
+        <br>
+        <div th:if="${success}" class="success-message">
+            <span th:text="${success}"></span>
+        </div>
 
-        <br><br>
+        <div th:if="${error}" class="error-message">
+            <span th:text="${error}"></span>
+        </div>
 
-        <table border="1" cellpadding="8">
-            <tr>
-                <th>Kode</th>
-                <th>Nama Barang</th>
-                <th>Kategori</th>
-                <th>Satuan</th>
-                <th>Harga</th>
-                <th>Stok</th>
-                <th>Aksi</th>
-            </tr>
-            <tr th:each="barang : ${listBarang}">
-                <td th:text="${barang.kodeBarang}"></td>
-                <td th:text="${barang.namaBarang}"></td>
-                <td th:text="${barang.kategori}"></td>
-                <td th:text="${barang.satuan}"></td>
-                <td th:text="'Rp ' + ${#numbers.formatDecimal(barang.harga, 0, 'COMMA', 2, 'POINT')}"></td>
-                <td th:text="${barang.stok}"></td>
-                <td>
-                    <a th:href="@{/barang/edit/{kode}(kode=${barang.kodeBarang})}" class="a-edit">Edit</a>
-                    |
-                    <a th:href="@{/barang/hapus/{kode}(kode=${barang.kodeBarang})}" class="a-hapus" onclick="return confirm('Yakin ingin menghapus barang ini?')">Hapus</a>
-                </td>
-            </tr>
-        </table>
+        <div class="container">
+            <table border="1" cellpadding="8">
+                <thead>
+                    <tr>
+                        <th>Kode</th>
+                        <th>Nama Barang</th>
+                        <th>Kategori</th>
+                        <th>Satuan</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr th:each="barang : ${listBarang}">
+                        <td th:text="${barang.kodeBarang}"></td>
+                        <td th:text="${barang.namaBarang}"></td>
+                        <td th:text="${barang.kategori}"></td>
+                        <td th:text="${barang.satuan}"></td>
+                        <td th:text="'Rp ' + ${#numbers.formatDecimal(barang.harga, 0, 'COMMA', 2, 'POINT')}"></td>
+                        <td th:text="${barang.stok}"></td>
+                        <td>
+                            <a th:href="@{/barang/edit/{kode}(kode=${barang.kodeBarang})}" class="a-edit">Edit</a>
+                            |
+                            <a th:href="@{/barang/hapus/{kode}(kode=${barang.kodeBarang})}" class="a-hapus" onclick="return confirm('Yakin ingin menghapus barang ini?')">Hapus</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>

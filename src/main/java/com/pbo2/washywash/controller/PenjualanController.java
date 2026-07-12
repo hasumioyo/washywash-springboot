@@ -20,6 +20,7 @@ import com.pbo2.washywash.model.Pelanggan;
 import com.pbo2.washywash.model.Penjualan;
 import com.pbo2.washywash.model.Barang;
 import com.pbo2.washywash.model.DetailPenjualan;
+import com.pbo2.washywash.model.User;
 import com.pbo2.washywash.service.PenjualanService;
 import com.pbo2.washywash.service.BarangService;
 import com.pbo2.washywash.service.DetailPenjualanService;
@@ -52,6 +53,9 @@ public class PenjualanController {
         List<DetailPenjualan> basketBarang =
                 (List<DetailPenjualan>) session.getAttribute("basketBarang");
 
+        User user = (User) session.getAttribute("loggedInUser");
+
+
         if(basketBarang == null){
             basketBarang = new ArrayList<>();
         }
@@ -66,6 +70,7 @@ public class PenjualanController {
             penjualan = new Penjualan();
         }
 
+
         double total = 0;
 
         for(DetailPenjualan d : basketBarang){
@@ -77,6 +82,8 @@ public class PenjualanController {
         model.addAttribute("pelanggan", pelanggan);
         model.addAttribute("listBarang", listBarang);
         model.addAttribute("total", total);
+        model.addAttribute("user", user);
+        model.addAttribute("tanggal", LocalDateTime.now());
     }       
 
     private boolean belumLogin(HttpSession session) {
@@ -262,15 +269,14 @@ public class PenjualanController {
     
 
     @PostMapping("/bayar")
-    public String bayar(@ModelAttribute Penjualan penjualan,
-                        HttpSession session,
-                        Model model) {  
+    public String bayar(@ModelAttribute Penjualan penjualan, HttpSession session, Model model) {  
 
-        List<DetailPenjualan> basketBarang =
-                (List<DetailPenjualan>) session.getAttribute("basketBarang");
+        List<DetailPenjualan> basketBarang = (List<DetailPenjualan>) session.getAttribute("basketBarang");
 
         if (basketBarang == null || basketBarang.isEmpty()) {
-            model.addAttribute("error", "Keranjang masih kosong.");
+            model.addAttribute("error", "Silakan tambahkan minimal satu barang sebelum melakukan pembayaran.");
+            loadHalamanPembayaran(model, session, barangService.getAllBarang());
+
             return "penjualan/form";
         }
 
@@ -285,11 +291,9 @@ public class PenjualanController {
 
         // Hitung kembalian
         double kembalian = penjualan.getTotalPembayaran() - total;
-
         if (kembalian < 0) {
 
             model.addAttribute("error", "Uang pembayaran kurang.");
-
             model.addAttribute("details", basketBarang);
             model.addAttribute("penjualan", penjualan);
             model.addAttribute("listBarang", barangService.getAllBarang());
@@ -299,9 +303,7 @@ public class PenjualanController {
             return "penjualan/form";
         }
 
-        // ===============================
-        // CEK STOK DULU
-        // ===============================
+        //pengecekan stoks
         for (DetailPenjualan detail : basketBarang) {
 
             Barang barang = barangService.getBarangByKode(
@@ -322,14 +324,10 @@ public class PenjualanController {
             }
         }
 
-        // ===============================
-        // SET DATA PENJUALAN
-        // ===============================
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        //buat data penjualannnn
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
-        penjualan.setKodePenjualan(
-                "PJ" + LocalDateTime.now().format(formatter));
+        penjualan.setKodePenjualan("PJ" + LocalDateTime.now().format(formatter));
 
         penjualan.setTanggalPenjualan(LocalDateTime.now());
 
@@ -341,14 +339,9 @@ public class PenjualanController {
 
         penjualan.setHasilKembalian(kembalian);
 
-        // ===============================
-        // SIMPAN PENJUALAN
-        // ===============================
-        penjualanService.tambahPenjualan(penjualan);
+        penjualanService.tambahPenjualan(penjualan); //simpan penjualan
 
-        // ===============================
-        // SIMPAN DETAIL PENJUALAN
-        // ===============================
+        //simpan detail penjualam
         for (DetailPenjualan detail : basketBarang) {
 
             detail.setPenjualan(penjualan);
@@ -379,13 +372,13 @@ public class PenjualanController {
         model.addAttribute("total", total);
 
   
-    //menghapus sesi setelah keluar dari halaman pembayaran
-    session.removeAttribute("basketBarang");
-    session.removeAttribute("pelanggan");
+        //menghapus sesi setelah keluar dari halaman pembayaran
+        session.removeAttribute("basketBarang");
+        session.removeAttribute("pelanggan");
 
-    // Redirect agar form kosong kembali
-    return "redirect:/penjualan/strukpembayaran/" + penjualan.getKodePenjualan();    
-}
+        // Redirect agar form kosong kembali
+        return "redirect:/penjualan/strukpembayaran/" + penjualan.getKodePenjualan();    
+    }
 
     @GetMapping("/selesai")
     public String selesai(HttpSession session){
@@ -468,8 +461,70 @@ public class PenjualanController {
 
         return "penjualan/form";
     }
+
+
+    @GetMapping("/laporan")
+    public String laporanBulanan(@RequestParam (required = false) Integer bulan, @RequestParam (required = false) Integer tahun, Model model, HttpSession session) {
+         
+         if (belumLogin(session)) {
+        return "redirect:/";
+        }
+
+        // nilai uatama atau default pertama kali membuka halaman
+        if (bulan == null) {
+            bulan = LocalDate.now().getMonthValue();
+        }
+
+        if (tahun == null) {
+            tahun = LocalDate.now().getYear();
+        }
+
+        List<Penjualan> laporan = penjualanService.getLaporanBulanan(bulan, tahun);
+
+        model.addAttribute("laporan", laporan);
+        model.addAttribute("bulan", bulan);
+        model.addAttribute("tahun", tahun);
+
+        if (laporan.isEmpty()) {
+            model.addAttribute("pesan",
+                    "Tidak ada penjualan pada bulan tersebut.");
+            model.addAttribute("totalPendapatan", 0);
+            model.addAttribute("jumlahTransaksi", 0);
+        } else {
+            model.addAttribute("totalPendapatan",
+                    penjualanService.getTotalPendapatanBulanan(bulan, tahun));
+            model.addAttribute("jumlahTransaksi",
+                    penjualanService.getJumlahTransaksiBulanan(bulan, tahun));
+        }
+
+        return "laporan/laporan";
+    }
     
+    @GetMapping("/laporan/print")
+    public String printLaporan(@RequestParam int bulan, @RequestParam int tahun, Model model){
+
+        model.addAttribute("laporan", penjualanService.getLaporanBulanan(bulan, tahun));
+
+        model.addAttribute("totalPendapatan", penjualanService.getTotalPendapatanBulanan(bulan, tahun));
+
+        model.addAttribute("jumlahTransaksi", penjualanService.getJumlahTransaksiBulanan(bulan, tahun));
+
+        model.addAttribute("bulan", bulan);
+        model.addAttribute("tahun", tahun);
+
+        return "laporan/template";
+    }
     
-    
+    @GetMapping("/cari")
+    public String cariPenjualan(@RequestParam String keyword, Model model, HttpSession session) {
+
+        if (belumLogin(session)) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("listPenjualan", penjualanService.cariPenjualan(keyword));
+
+        return "penjualan/index";
+    }
 
 }

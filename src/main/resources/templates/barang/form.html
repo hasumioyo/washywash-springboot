@@ -13,10 +13,14 @@
             th:object="${barang}"
             method="post">
 
-            <label>Kode Barang</label><br>
-            <input type="hidden" th:field="*{kodeBarang}">
-            <input type="text" th:value="*{kodeBarang}" readonly class="kode-barang-read"><br><br>
-            <!-- use * to make the code appear -->
+            <div th:if="${mode == 'edit'}">
+                <label>Kode Barang</label><br>
+                <input type="hidden" th:field="*{kodeBarang}">
+                <input type="text" th:value="*{kodeBarang}" readonly class="kode-barang-read">
+
+                <br><br>
+            </div>
+            
             <br>
 
             <label>Nama Barang</label><br>

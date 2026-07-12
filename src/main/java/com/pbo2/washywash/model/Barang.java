@@ -29,6 +29,9 @@ public class Barang {
     @Column(name = "stok_barang")
     private int stok;
 
+    @Column(name = "status")
+    private String status;
+
     public Barang() {
     }
 
@@ -87,5 +90,13 @@ public class Barang {
 
     public void setStok(int stok) {
         this.stok = stok;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
