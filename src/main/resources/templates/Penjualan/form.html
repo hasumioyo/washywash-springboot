@@ -8,8 +8,8 @@
     <div class="split-container">
         <section class="split-left">
              <!-- <p>Kode : <span th:text="${penjualan.kodePenjualan}"></span></p> -->
-           <p><strong>Tanggal & Waktu :</strong><span th:text="${#temporals.format(tanggal,'dd MMMM yyyy HH:mm')}"></span></p>
-            <p><strong>Kasir :</strong><span th:text="${user.username}"></span></p>
+           <p><strong>Tanggal & Waktu :</strong> <span th:text="${#temporals.format(tanggal,'dd MMMM yyyy HH:mm')}"></span></p>
+            <p><strong>Kasir :</strong> <span th:text="${user.username}"></span></p>
 
             <form th:action="@{/penjualan/caripelanggan}" method="get" class="nav-search-add">
                 <input type="text" name="kodePelanggan" placeholder="Kode Pelanggan">
